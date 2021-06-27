@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LessaShoes.Persistance.Migrations
 {
     [DbContext(typeof(LessaShoesContext))]
-    [Migration("20210626215426_initial")]
-    partial class initial
+    [Migration("20210627164331_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,8 +23,8 @@ namespace LessaShoes.Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("disponivel")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("imagemURL")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("nomeTenis")
                         .HasColumnType("TEXT");
@@ -46,8 +46,14 @@ namespace LessaShoes.Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("cargo")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("idade")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("imagemURL")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("nomeUsuario")
                         .HasColumnType("TEXT");

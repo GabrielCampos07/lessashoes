@@ -2,7 +2,7 @@
 
 namespace LessaShoes.Persistance.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,10 +12,10 @@ namespace LessaShoes.Persistance.Migrations
                 {
                     tenisID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    imagemURL = table.Column<string>(type: "TEXT", nullable: true),
                     nomeTenis = table.Column<string>(type: "TEXT", nullable: true),
                     tamanho = table.Column<int>(type: "INTEGER", nullable: false),
-                    qtdTenis = table.Column<int>(type: "INTEGER", nullable: false),
-                    disponivel = table.Column<bool>(type: "INTEGER", nullable: false)
+                    qtdTenis = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,8 +28,10 @@ namespace LessaShoes.Persistance.Migrations
                 {
                     usuarioID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    imagemURL = table.Column<string>(type: "TEXT", nullable: true),
                     nomeUsuario = table.Column<string>(type: "TEXT", nullable: true),
-                    idade = table.Column<int>(type: "INTEGER", nullable: false)
+                    idade = table.Column<int>(type: "INTEGER", nullable: false),
+                    cargo = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
