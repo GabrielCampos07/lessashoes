@@ -16,6 +16,7 @@ namespace LessaShoes.API
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,12 +30,12 @@ namespace LessaShoes.API
             services.AddDbContext<LessaShoesContext>(
                 x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
             );
+            
             services.AddControllers();
+
+            services.AddScoped<ITenisService, TenisService>();
             services.AddScoped<IGeralPersist, GeralPersist>();
             services.AddScoped<ITenisPersist, TenisPersist>();
-            services.AddScoped<IUsuarioPersist, UsuarioPersist>();
-            services.AddScoped<IUsuarioService, UsuarioService>();
-            services.AddScoped<ITenisService, TenisService>();
 
             services.AddCors();
             services.AddSwaggerGen(c =>

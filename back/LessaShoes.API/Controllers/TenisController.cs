@@ -11,22 +11,22 @@ using Microsoft.AspNetCore.Http;
 namespace LessaShoes.API.Controllers
 {
     [ApiController]
-    [Route("[api]")]
+    [Route("api")]
     public class TenisController : ControllerBase
     {
         private readonly ITenisService _TenisService;
 
-        public TenisController(ITenisService TenisService)
+        public TenisController(ITenisService tenisService)
     {
-        _TenisService = TenisService;
+        _TenisService = tenisService;
     }
         [HttpGet] 
         public async Task<IActionResult> Get()
-        {
+        {            
             try
             {
                 var tenis = await _TenisService.GetAllTenisAsync();
-                if(tenis == null) return null;
+                if(tenis == null) return NotFound("Nenhum Tenis encontrado.");
 
                 return Ok(tenis);
             }
