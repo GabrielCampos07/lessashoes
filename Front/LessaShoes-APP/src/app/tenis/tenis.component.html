@@ -13,9 +13,11 @@
   <thead>
     <tr>
       <th>
-        <button type="button" class="btn btn-primary"
-        (click)="alternarImagem()">
-          {{!exibirImagem? 'exibir' : 'ocultar'}}
+        <button type="button" class="btn btn-outline-dark"
+        (click)="alternarImagem()"
+        [style.color]='color'
+        [style.background-color]='bgBlack'>
+        {{!exibirImagem? 'exibir' : 'ocultar'}}
         </button>
       </th>
       <th scope="col">#</th>
@@ -31,7 +33,7 @@
           [isAnimated]="true"
           src="../assets/{{tenis.imagemURL}}"
           [style.width.px]="larguraImagem"
-          [style.margin.px]="margemImagem">
+          [style.height.px]="margemImagem">
       </td>
       <td>{{tenis.tenisID}}</td>
       <td>{{tenis.nomeTenis}}</td>

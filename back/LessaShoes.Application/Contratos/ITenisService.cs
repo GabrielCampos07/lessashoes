@@ -7,7 +7,7 @@ namespace LessaShoes.Application.Contratos
     {
         Task<tenis> AddTenis(tenis model);
         Task<tenis> UpdateTenis(int tenisID, tenis model);
-        Task<bool> DeleteTenis(int tenisID);
+        Task<bool> Delete(int tenisID);
         Task<tenis[]> GetAllTenisAsync();
         Task<tenis> GetTenisByIDAsync(int tenisID);
         Task<tenis[]> GetAllTenisByNameAsync(string nome);

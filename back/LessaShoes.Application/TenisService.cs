@@ -21,13 +21,13 @@ namespace LessaShoes.Application
             try
             {
                 _GeralPersist.add<tenis>(model);
-                if(await _GeralPersist.SaveChangesAsync())
+                if (await _GeralPersist.SaveChangesAsync())
                 {
                     return await _TenisPersist.GetTenisByIDAsync(model.tenisID);
                 }
                 return null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -37,10 +37,12 @@ namespace LessaShoes.Application
             try
             {
                 var tenis = await _TenisPersist.GetTenisByIDAsync(tenisID);
-                if(tenis == null) throw new Exception("O ID para atualização não foi encontrado");
+                if (tenis == null) throw new Exception("O ID para atualização não foi encontrado");
 
-                _GeralPersist.Update(tenis);
-                if(await _GeralPersist.SaveChangesAsync())
+                model.tenisID = tenisID;
+
+                _GeralPersist.Update(model);
+                if (await _GeralPersist.SaveChangesAsync())
                 {
                     return await _TenisPersist.GetTenisByIDAsync(model.tenisID);
                 }
@@ -52,30 +54,16 @@ namespace LessaShoes.Application
             }
         }
 
-        public async Task<bool> DeleteTenis(int tenisID)
+        public async Task<tenis[]> GetAllTenisAsync()
         {
             try
             {
-                var tenis = await _TenisPersist.GetTenisByIDAsync(tenisID);
-                if(tenis == null) throw new Exception("ID para deletar não encontrado");
+                var tenis = await _TenisPersist.GetAllTenisAsync();
+                if (tenis == null) return null;
 
-                _GeralPersist.Delete<tenis>(tenis);
-                return await _GeralPersist.SaveChangesAsync();
+                return tenis;
             }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public async Task<tenis[]> GetAllTenisAsync()
-        {   try{
-            var tenis = await _TenisPersist.GetAllTenisAsync();
-            if(tenis == null) return null;
-
-            return tenis;
-            }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -84,23 +72,40 @@ namespace LessaShoes.Application
         public async Task<tenis[]> GetAllTenisByNameAsync(string nome)
         {
             var tenis = await _TenisPersist.GetAllTenisByNameAsync(nome);
-            if(tenis == null) return null;
+            if (tenis == null) return null;
 
             return tenis;
         }
 
         public async Task<tenis> GetTenisByIDAsync(int tenisID)
         {
-            try{
-            var tenis = await _TenisPersist.GetTenisByIDAsync(tenisID);
-            if(tenis == null) return null;
+            try
+            {
+                var tenis = await _TenisPersist.GetTenisByIDAsync(tenisID);
+                if (tenis == null) return null;
 
-            return tenis;
+                return tenis;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
-        catch(Exception ex)
+
+        public async Task<bool> Delete(int tenisID)
         {
-            throw new Exception(ex.Message);
-        }
+            try
+            {
+                var tenis = await _TenisPersist.GetTenisByIDAsync(tenisID);
+                if (tenis == null) throw new Exception("Não foi possível excluir o tenis");
+
+                _GeralPersist.Delete(tenis);
+                return await _GeralPersist.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

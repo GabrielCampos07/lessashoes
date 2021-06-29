@@ -21,9 +21,9 @@ namespace LessaShoes.Persistance.Contratados
             _context.Remove(entity);
         }
 
-        public void DeleteRange<T>(T[] entity) where T : class
+        public void DeleteRange<T>(T[] entityArray) where T : class
         {
-            _context.RemoveRange(entity);
+            _context.RemoveRange(entityArray);
         }
 
         public async Task<bool> SaveChangesAsync()

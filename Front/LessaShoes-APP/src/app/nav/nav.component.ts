@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
+  larguraImagem : number = 80
+  alturaImagem : number = 80
+  bgBlack: string = "background: black"
+
   constructor() { }
 
   ngOnInit() {
