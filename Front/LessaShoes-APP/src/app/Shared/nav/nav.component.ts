@@ -11,6 +11,8 @@ export class NavComponent implements OnInit {
   alturaImagem : number = 80
   bgBlack: string = "background: black"
 
+  isCollapsed: boolean = true;
+
   constructor() { }
 
   ngOnInit() {
