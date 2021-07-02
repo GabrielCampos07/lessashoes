@@ -12,6 +12,9 @@ import { FormsModule } from '@angular/forms';
 import { TooltipModule  } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule,BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { AppRoutingModule } from './app-routing.module';
+import { ToastrModule } from 'ngx-toastr';
+import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 import { tenis } from './services/tenis.service';
 @NgModule({
@@ -29,8 +32,17 @@ import { tenis } from './services/tenis.service';
     FormsModule,
     BsDropdownModule,
     CollapseModule,
+    NgxSpinnerModule,
+    ModalModule.forRoot(),
     CollapseModule.forRoot(),
     TooltipModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+    positionClass: 'toast-bottom-right',
+    preventDuplicates: true,
+    progressBar: true,
+  }
+    ),
   ],
   providers: [tenis],
   bootstrap: [AppComponent]

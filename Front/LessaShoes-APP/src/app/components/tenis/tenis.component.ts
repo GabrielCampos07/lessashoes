@@ -1,6 +1,10 @@
 import { style } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { NgxSpinnerService } from "ngx-spinner";
+
 
 import { Tenis } from 'src/app/Models/Tenis';
 import { tenis } from 'src/app/services/tenis.service';
@@ -8,10 +12,16 @@ import { tenis } from 'src/app/services/tenis.service';
 @Component({
   selector: 'app-tenis',
   templateUrl: './tenis.component.html',
-  styleUrls: ['./tenis.component.css'],
+  styleUrls: [
+  './tenis.component.css',],
 })
 export class TenisComponent implements OnInit {
-  constructor(private TenisService: tenis) {}
+
+
+  constructor(private TenisService: tenis,
+    private toastr: ToastrService,
+    private modalService: BsModalService,
+    private spinner: NgxSpinnerService) {}
 
   public tenisFiltrados: Tenis[] = [];
   public tenis: Tenis[] = [];
@@ -23,9 +33,17 @@ export class TenisComponent implements OnInit {
   public titulo = "Busca de Tenis";
   public color: string = 'white';
   public bgBlack: string = 'black';
+  public botaoPadrao : string []= [
+    'background: black',
+    'color: white'
+  ]
 
   private _filtroLista = '';
 
+  public ngOnInit() {
+    this.getTenis();
+    this.spinner.show();
+  }
 
   public get filtroLista(): string {
     return this._filtroLista;
@@ -56,19 +74,34 @@ export class TenisComponent implements OnInit {
     this.exibirImagem = !this.exibirImagem;
   }
 
-  public ngOnInit() {
-    this.getTenis();
-  }
 
   public getTenis(): void {
     this.TenisService.getTenis().subscribe(
       (_Tenis: Tenis[]) => {
         this.tenis = _Tenis;
         this.tenisFiltrados = this.tenis;
+        this.spinner.hide();
       },
       (error) => {
-        console.log(error);
-      }
+        this.spinner.hide();
+        this.toastr.error("Erro ao carregar os Tenis")
+      },
+
     );
   }
+
+  modalRef = {} as BsModalRef;
+  openModal(template: TemplateRef<any>) : void {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {
+    this.toastr.success('O tenis foi excluido.', 'Sucesso!');
+    this.modalRef.hide();
+  }
+
+  decline(): void {
+    this.modalRef.hide();
+  }
 }
+
