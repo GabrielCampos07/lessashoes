@@ -1,18 +1,25 @@
-<app-titulos [titulo]="'Busca de tênis'"></app-titulos>
+<app-titulos
+  [titulo]="'Busca de tênis'"
+  iconeClasse="fas fa-socks"
+></app-titulos>
 <hr />
 <div class="form-inline">
   <div class="input-group mb-3">
-    <input
-      type="text"
-      class="form"
-      id="floatingInput"
-      placeholder="Buscar"
-    />
+    <div class="form-group mx-sm-3 mb-2">
+      <label for="inputPassword2" class="sr-only">Buscar</label>
+      <input
+        type="text"
+        class="form-control"
+        id="inputPassword2"
+        placeholder="Buscar"
+        [(ngModel)]="filtroLista"
+      />
+    </div>
     <button
-      class="btn"
-      type="button"
-      id="button-addon2"
-      style="background: black; color: white"
+      type="submit"
+      class="btn mb-2"
+      [style.background]="fundoPreto"
+      [style.color]="corBranca"
     >
       Buscar
     </button>
@@ -26,8 +33,8 @@
           type="button"
           class="btn btn-outline-dark"
           (click)="alternarImagem()"
-          [style.color]="color"
-          [style.background-color]="bgBlack"
+          [style.color]="corBranca"
+          [style.background-color]="fundoPreto"
         >
           <i class="{{ !exibirImagem ? 'fa fa-eye' : 'fa fa-eye-slash' }}"></i>
           {{ !exibirImagem ? "exibir" : "ocultar" }}
@@ -62,22 +69,32 @@
         <button
           type="button"
           class="btn btn-sm mr-2"
-          [style]="bgBlack"
+          [style]="fundoPreto"
           tooltip="editar"
         >
           <i class="fa fa-edit"></i>
         </button>
-        <button type="button" class="btn btn-sm" tooltip="excluir" (click)="openModal(template)">
+        <button
+          type="button"
+          class="btn btn-sm"
+          tooltip="excluir"
+          (click)="openModal(template)"
+        >
           <i class="fa fa-trash"></i>
         </button>
       </td>
     </tr>
   </tbody>
 
-<ng-template #template>
-  <div class="modal-body text-center">
-    <p>Deseja mesmo excluir?</p>
-    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
-    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
-  </div>
-</ng-template>
+  <ng-template #template>
+    <div class="modal-body text-center">
+      <p>Deseja mesmo excluir?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()">
+        Sim
+      </button>
+      <button type="button" class="btn btn-primary" (click)="decline()">
+        Não
+      </button>
+    </div>
+  </ng-template>
+</table>

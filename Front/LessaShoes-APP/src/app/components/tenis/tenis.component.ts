@@ -1,6 +1,6 @@
 import { style } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -26,14 +26,16 @@ export class TenisComponent implements OnInit {
   public tenisFiltrados: Tenis[] = [];
   public tenis: Tenis[] = [];
 
-
   public margemImagem: number = 30;
   public larguraImagem: number = 30;
   public exibirImagem: boolean = true;
+
   public titulo = "Busca de Tenis";
-  public color: string = 'white';
-  public bgBlack: string = 'black';
+
+  public corBranca: string = 'white';
+  public fundoPreto: string = 'black';
   public botaoPadrao : string []= [
+    'border-radius: 50px',
     'background: black',
     'color: white'
   ]
@@ -59,16 +61,17 @@ export class TenisComponent implements OnInit {
   public filtrarTenis(filtrarPor: string): Tenis[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.tenis.filter(
-      (tenis) => tenis.nomeTenis.toLocaleLowerCase().indexOf(filtrarPor) != -1
+      (tenis) => tenis.nomeTenis.toLocaleLowerCase()
+      .indexOf(filtrarPor) != -1
     );
   }
   public alternarImagem() : void {
     if (!this.exibirImagem) {
-      this.color = 'white';
-      this.bgBlack = 'black';
+      this.corBranca = 'white';
+      this.fundoPreto = 'black';
     } else {
-      this.color = 'black';
-      this.bgBlack = 'white';
+      this.corBranca = 'black';
+      this.fundoPreto = 'white';
     }
 
     this.exibirImagem = !this.exibirImagem;
@@ -76,8 +79,8 @@ export class TenisComponent implements OnInit {
 
 
   public getTenis(): void {
-    this.TenisService.getTenis().subscribe(
-      (_Tenis: Tenis[]) => {
+    this.TenisService.getTenis()
+    .subscribe((_Tenis: Tenis[]) => {
         this.tenis = _Tenis;
         this.tenisFiltrados = this.tenis;
         this.spinner.hide();
@@ -86,13 +89,13 @@ export class TenisComponent implements OnInit {
         this.spinner.hide();
         this.toastr.error("Erro ao carregar os Tenis")
       },
-
     );
   }
 
   modalRef = {} as BsModalRef;
   openModal(template: TemplateRef<any>) : void {
-    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+    this.modalRef = this.modalService
+    .show(template, {class: 'modal-sm'});
   }
 
   confirm(): void {

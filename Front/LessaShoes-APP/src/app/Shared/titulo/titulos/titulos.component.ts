@@ -8,7 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TitulosComponent implements OnInit {
 
   @Input() titulo: any;
+  @Input() iconeClasse = 'fas fa-user';
 
+  public fundoPreto: string = 'black';
   constructor() { }
 
   ngOnInit() {
