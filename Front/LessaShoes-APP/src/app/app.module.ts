@@ -1,7 +1,6 @@
 import { AppComponent } from './app.component';
 import { TenisComponent } from './components/tenis/tenis.component';
 import { NavComponent } from './Shared/nav/nav.component';
-import { TitulosComponent } from './Shared/titulo/titulos/titulos.component';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,14 +16,21 @@ import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerModule } from "ngx-spinner";
 
 import { tenis } from './services/tenis.service';
+import { CommonModule } from '@angular/common';
+import { CabecalhoComponent } from './Shared/cabecalho/cabecalho.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
       TenisComponent,
       NavComponent,
-      TitulosComponent
+      CabecalhoComponent,
+      UsuariosComponent,
+      DashboardComponent
    ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
