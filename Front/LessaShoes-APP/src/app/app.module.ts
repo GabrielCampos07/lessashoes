@@ -20,6 +20,8 @@ import { CommonModule } from '@angular/common';
 import { CabecalhoComponent } from './Shared/cabecalho/cabecalho.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TenisaddComponent } from './components/tenis/tenisadd/tenisadd.component';
+import { TenislistaComponent } from './components/tenis/tenislista/tenislista.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
       NavComponent,
       CabecalhoComponent,
       UsuariosComponent,
-      DashboardComponent
+      DashboardComponent,
+      TenisaddComponent,
+      TenislistaComponent
    ],
   imports: [
     CommonModule,

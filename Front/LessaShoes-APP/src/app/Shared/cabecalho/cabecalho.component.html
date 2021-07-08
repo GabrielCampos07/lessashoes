@@ -1,7 +1,23 @@
-<div class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm" [style.background]='fundoPreto'>
-  <i class="{{iconeClasse}}" style='margin-right: 5px;'></i>
-  <div class="lh-1">
-    <h1 class="h4 mb-0 lh-1">{{titulo}}</h1>
-    <small>Since 2021</small>
+<div
+  class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
+  [style.background]="fundoPreto"
+>
+  <i class="{{ iconeClasse }}" style="margin-right: 26px"></i>
+  <div class="d-flex align-items-center mr-auto">
+    <div class="lh-100">
+      <h4 class="mb-0">{{ titulo }}</h4>
+      <small>Since 2021</small>
+    </div>
+    <div class="p-3" style="position: relative; left: 750px" *ngIf="mostrarBotao">
+      <button
+        type="button"
+        class="btn btn-light"
+        style="color: black; font-size: 15px; font-weight: bold"
+        (click)="listar()"
+      >
+      <i class="{{ mostrarLista ? 'fa fa-eye' : 'fa fa-eye-slash' }}"></i>
+      {{mostrarLista ? "exibir" : "ocultar" }}
+      </button>
+    </div>
   </div>
 </div>
