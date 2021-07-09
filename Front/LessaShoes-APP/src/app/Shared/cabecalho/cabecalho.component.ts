@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class CabecalhoComponent implements OnInit {
 
-  @Input() titulo: any;
+  @Input() titulo: string = "";
   @Input() iconeClasse = 'fas fa-user';
   @Input() mostrarBotao : boolean = false;
   @Input() subtitulo : string = "";

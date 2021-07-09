@@ -1,7 +1,9 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
+
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+
 import { Tenis } from 'src/app/Models/Tenis';
 import { tenis } from 'src/app/services/tenis.service';
 
@@ -15,7 +17,7 @@ export class TenislistaComponent implements OnInit {
     private TenisService: tenis,
     private toastr: ToastrService,
     private modalService: BsModalService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
   ) {}
 
   public tenisFiltrados: Tenis[] = [];
@@ -24,8 +26,6 @@ export class TenislistaComponent implements OnInit {
   public margemImagem: number = 30;
   public larguraImagem: number = 30;
   public exibirImagem: boolean = true;
-
-  public titulo = 'Busca de Tenis';
 
   public corBranca: string = 'white';
   public fundoPreto: string = 'black';
