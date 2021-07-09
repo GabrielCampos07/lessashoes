@@ -11,6 +11,7 @@ export class CabecalhoComponent implements OnInit {
   @Input() titulo: any;
   @Input() iconeClasse = 'fas fa-user';
   @Input() mostrarBotao : boolean = false;
+  @Input() subtitulo : string = "";
 
   public fundoPreto: string = 'black';
   public corBranca: string = 'white';

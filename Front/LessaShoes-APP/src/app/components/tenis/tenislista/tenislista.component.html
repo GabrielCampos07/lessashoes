@@ -13,7 +13,9 @@
     <button
       type="submit"
       class="btn mb-2"
+      id="botaoBuscar"
       style="background: black; color: white"
+      (click)="buscar()"
     >
       Buscar
     </button>
@@ -78,6 +80,7 @@
             class="btn btn-sm mr-2"
             [style]="fundoPreto"
             tooltip="editar"
+            routerLink='/tenis/atualizar'
           >
             <i class="fa fa-edit"></i>
           </button>

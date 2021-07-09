@@ -22,6 +22,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TenisaddComponent } from './components/tenis/tenisadd/tenisadd.component';
 import { TenislistaComponent } from './components/tenis/tenislista/tenislista.component';
+import { TenisattComponent } from './components/tenis/tenisatt/tenisatt.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +32,8 @@ import { TenislistaComponent } from './components/tenis/tenislista/tenislista.co
       UsuariosComponent,
       DashboardComponent,
       TenisaddComponent,
-      TenislistaComponent
+      TenislistaComponent,
+      TenisattComponent
    ],
   imports: [
     CommonModule,
