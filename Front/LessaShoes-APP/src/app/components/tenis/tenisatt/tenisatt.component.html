@@ -1,0 +1,84 @@
+<form [formGroup]="form">
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="inputEmail4">Nome</label>
+      <input
+        type="text"
+        class="form-control"
+        id="inputEmail4"
+        formControlName="nome"
+        placeholder="Nome do tênis"
+        [ngClass]="{ 'is-invalid': fb.nome.errors && fb.nome.touched }"
+      />
+      <div *ngIf="fb.nome.errors?.required" class="invalid-feedback">
+        Nome é obrigatório
+      </div>
+      <div *ngIf="fb.nome.errors?.minlength" class="invalid-feedback">
+        Minimo de 4 caracteres
+      </div>
+      <div *ngIf="fb.nome.errors?.maxlength" class="invalid-feedback">
+        Máximo de 20 caracteres
+      </div>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">Marca</label>
+      <select id="inputState" class="form-control">
+        <option>Escolha uma marca</option>
+        <option>Nike</option>
+        <option>Adidas</option>
+        <option>Sal e Pimenta</option>
+        <option>Allstar</option>
+        <option>Vans</option>
+      </select>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">Tamanho</label>
+      <select id="inputState" class="form-control">
+        <option>Escolha um tamanho</option>
+        <option>36</option>
+        <option>37</option>
+        <option>38</option>
+        <option>39</option>
+        <option>40</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group col-md-4">
+    <label for="inputAddress">Quantidade</label>
+    <input
+      type="number"
+      class="form-control"
+      id="inputAddress"
+      formControlName="quantidade"
+      placeholder="Digite uma quantidade"
+      [ngClass]="{
+        'is-invalid': fb.quantidade.errors && fb.quantidade.touched
+      }"
+    />
+    <div *ngIf="fb.quantidade.errors?.required" class="invalid-feedback">
+      Quantidade é obrigatória
+    </div>
+    <div *ngIf="fb.quantidade.errors?.minlength" class="invalid-feedback">
+      Minimo de 1 caracter é obrigatório
+    </div>
+  </div>
+  <hr />
+  <div class="justify-content-around">
+    <button
+      type="submit"
+      class="btn"
+      style="background: red; color: white; margin-right: 5px"
+      (click)="cancelarForm()"
+    >
+      Cancelar
+    </button>
+    <button
+      type="submit"
+      class="btn"
+      style="background: black; color: white"
+      [disabled]="!form.valid"
+    >
+      Atualizar tênis
+    </button>
+  </div>
+</form>
