@@ -32,6 +32,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { tenis } from './services/tenis.service';
 import { PerfilComponent } from './components/user/perfil/perfil.component';
+import { UsuarioslistaComponent } from './components/usuarios/usuarioslista/usuarioslista.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { PerfilComponent } from './components/user/perfil/perfil.component';
       LoginComponent,
       RegistrarComponent,
       PerfilComponent,
+      UsuarioslistaComponent,
    ],
   imports: [
     CommonModule,

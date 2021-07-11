@@ -55,6 +55,7 @@
         </th>
         <th scope="col">#</th>
         <th scope="col">Nome</th>
+        <th scope="col">Marca</th>
         <th scope="col">Tamanho</th>
         <th scope="col">Quantidade</th>
         <th scope="col">Opções</th>
@@ -73,6 +74,7 @@
         </td>
         <td>{{ tenis.tenisID }}</td>
         <td>{{ tenis.nomeTenis }}</td>
+        <td>{{ tenis.marca }}</td>
         <td>{{ tenis.tamanho }}</td>
         <td *ngIf="tenis.qtdTenis">
           {{ tenis.qtdTenis }}

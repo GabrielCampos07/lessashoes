@@ -12,10 +12,14 @@ import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrarComponent } from './components/user/registrar/registrar.component';
 import { PerfilComponent } from './components/user/perfil/perfil.component';
+import { UsuarioslistaComponent } from './components/usuarios/usuarioslista/usuarioslista.component';
 
 const routes: Routes = [
   {
-    path: 'usuarios', component: UsuariosComponent
+    path: 'usuarios', component: UsuariosComponent,
+    children: [
+      { path: 'lista', component: UsuarioslistaComponent}
+    ]
   },
   {
     path: 'user',

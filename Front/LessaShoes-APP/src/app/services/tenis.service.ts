@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 
 export class tenis {
-  BaseURL = 'https://localhost:5001/api';
+  BaseURL = 'https://localhost:5001/api/tenis';
 
   constructor(private http: HttpClient) {}
 

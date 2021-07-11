@@ -3,7 +3,6 @@
   rel="stylesheet"
   id="bootstrap-css"
 />
-
 <div class="register">
   <div class="row">
     <div class="col-md-3 register-left">
@@ -11,181 +10,139 @@
       <h3>Bem-vindo</h3>
       <p>Registre-se e faça parte da familia LessaShoes</p>
       <p>Já tem cadastro? Faça o login</p>
-      <input type="submit" name="" value="Login" routerLink="/user/login" /><br />
+      <input
+        type="submit"
+        name=""
+        value="Login"
+        routerLink="/user/login"
+      /><br />
     </div>
     <div class="col-md-9 register-right">
       <div class="tab-content" id="myTabContent">
-        <div
-          class="tab-pane fade show active"
-          id="home"
-          role="tabpanel"
-          aria-labelledby="home-tab"
-        >
-          <h3 class="register-heading">Campos de registro</h3>
-          <div class="row register-form">
-            <div class="col-md-6">
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Primeiro nome *"
-                  value=""
-                />
+          <div
+            class="tab-pane fade show active"
+            id="home"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <h3 class="register-heading">Campos de registro</h3>
+            <form [formGroup]="form">
+            <div class="row register-form">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nome completo *"
+                    value=""
+                    formControlName="nomeCompleto"
+                    [ngClass]="{
+                      'is-invalid': fb.nomeCompleto.errors && fb.nomeCompleto.touched
+                    }"
+                  />
+                  <div *ngIf="fb.nomeCompleto.errors?.required" class="invalid-feedback">
+                    Nome é obrigatório
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nome de usuário *"
+                    value=""
+                    formControlName="nomeUsuario"
+                    [ngClass]="{
+                      'is-invalid':
+                        fb.nomeUsuario.errors && fb.nomeUsuario.touched
+                    }"
+                  />
+                  <div *ngIf="fb.nomeUsuario.errors?.required" class="invalid-feedback">
+                    Ultimo nome é obrigatório
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Senha *"
+                    value=""
+                    formControlName="senha"
+                    [ngClass]="{
+                      'is-invalid': fb.senha.errors && fb.senha.touched
+                    }"
+                  />
+                  <div *ngIf="fb.senha.errors?.required" class="invalid-feedback">
+                    Senha é obrigatória
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Confirmar senha *"
+                    value=""
+                    formControlName="confirmarSenha"
+                    [ngClass]="{
+                      'is-invalid':
+                        fb.confirmarSenha.errors && fb.confirmarSenha.touched
+                    }"
+                  />
+                  <div *ngIf="fb.confirmarSenha.errors?.required" class="invalid-feedback">
+                    Confirme sua senha
+                  </div>
+                </div>
               </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Ultimo nome *"
-                  value=""
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="password"
-                  class="form-control"
-                  placeholder="Senha *"
-                  value=""
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="password"
-                  class="form-control"
-                  placeholder="Confirmar senha *"
-                  value=""
-                />
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Seu e-mail *"
+                    value=""
+                    formControlName="email"
+                    [ngClass]="{
+                      'is-invalid': fb.email.errors && fb.email.touched
+                    }"
+                  />
+                  <div *ngIf="fb.email.errors?.required" class="invalid-feedback">
+                    E-mail é obrigatório
+                  </div>
+                  <div *ngIf="fb.email.errors?.email" class="invalid-feedback">
+                    Digite um e-mail válido
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    minlength="10"
+                    maxlength="10"
+                    name="txtEmpPhone"
+                    class="form-control"
+                    placeholder="Seu telefone"
+                    value=""
+                  />
+                </div>
+                <div class="form-group">
+                  <select class="form-control">
+                    <option class="hidden" selected disabled>
+                      Cargo *
+                    </option>
+                    <option>Administrador</option>
+                    <option>Vendedor</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlFile1">Foto de perfil</label>
+                  <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                </div>
+                <input type="submit" class="btnRegister" value="Registrar" />
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <input
-                  type="email"
-                  class="form-control"
-                  placeholder="Seu e-mail *"
-                  value=""
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  minlength="10"
-                  maxlength="10"
-                  name="txtEmpPhone"
-                  class="form-control"
-                  placeholder="Seu telefone *"
-                  value=""
-                />
-              </div>
-              <div class="form-group">
-                <select class="form-control">
-                  <option class="hidden" selected disabled>
-                    Sua pergunta secreta
-                  </option>
-                  <option>Quando é sua data de lançamento?</option>
-                  <option>Qual é seu antigo numero de telefone?</option>
-                  <option>Qual o nome do seu pet?</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Sua resposta *"
-                  value=""
-                />
-              </div>
-              <input type="submit" class="btnRegister" value="Registrar" />
-            </div>
+          </form>
           </div>
-        </div>
-        <div
-          class="tab-pane fade show"
-          id="profile"
-          role="tabpanel"
-          aria-labelledby="profile-tab"
-        >
-          <h3 class="register-heading">Apply as a Hirer</h3>
-          <div class="row register-form">
-            <div class="col-md-6">
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="First Name *"
-                  value=""
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Last Name *"
-                  value=""
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="email"
-                  class="form-control"
-                  placeholder="Email *"
-                  value=""
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  maxlength="10"
-                  minlength="10"
-                  class="form-control"
-                  placeholder="Phone *"
-                  value=""
-                />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <input
-                  type="password"
-                  class="form-control"
-                  placeholder="Password *"
-                  value=""
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="password"
-                  class="form-control"
-                  placeholder="Confirm Password *"
-                  value=""
-                />
-              </div>
-              <div class="form-group">
-                <select class="form-control">
-                  <option class="hidden" selected disabled>
-                    Please select your Sequrity Question
-                  </option>
-                  <option>What is your Birthdate?</option>
-                  <option>What is Your old Phone Number</option>
-                  <option>What is your Pet Name?</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="`Answer *"
-                  value=""
-                />
-              </div>
-              <input type="submit" class="btnRegister" value="Register" />
-            </div>
-          </div>
-        </div>
+          <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+          <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       </div>
     </div>
   </div>
 </div>
-
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
