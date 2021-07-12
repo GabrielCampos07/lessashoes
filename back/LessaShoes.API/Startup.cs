@@ -1,4 +1,3 @@
-using LessaShoes.API.Controllers;
 using LessaShoes.Application;
 using LessaShoes.Application.Contratos;
 using LessaShoes.Persistance;
@@ -33,9 +32,12 @@ namespace LessaShoes.API
             
             services.AddControllers();
 
-            services.AddScoped<ITenisService, TenisService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IGeralPersist, GeralPersist>();
+            services.AddScoped<IUsuarioPersist, UsuarioPersist>();
             services.AddScoped<ITenisPersist, TenisPersist>();
+            services.AddScoped<ITenisService, TenisService>();
+
 
             services.AddCors();
             services.AddSwaggerGen(c =>
@@ -43,8 +45,6 @@ namespace LessaShoes.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LessaShoes.API", Version = "v1" });
             });
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

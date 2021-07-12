@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 namespace LessaShoes.API.Controllers
 {
     [ApiController]
-    [Route("api/tenis")]
+    [Route("/api/tenis")]
     public class TenisController : ControllerBase
     {
         private readonly ITenisService _TenisService;
