@@ -1,12 +1,49 @@
-<div class="container">
-  <div class="main-body">
+<div class="container" *ngIf="usuarios && usuarios.length">
+  <div class="input-group mb-3">
+    <div class="form-group mx-sm-3 mb-2">
+      <label for="inputPassword2" class="sr-only">Buscar</label>
+      <input
+        type="text"
+        class="form-control"
+        id="inputPassword2"
+        placeholder="Buscar"
+        [(ngModel)]="filtroLista"
+      />
+    </div>
+    <button
+      type="submit"
+      class="btn mb-2"
+      id="botaoBuscar"
+      style="background: black; color: white"
+      (click)="Buscar()"
+    >
+      Buscar
+    </button>
+  </div>
+  <div>
+    <a
+      class="btn"
+      routerLink="/usuarios/adicionar"
+      style="
+        width: 10%;
+        color: black;
+        position: relative;
+        left: 150vh;
+        bottom: 10vh;
+      "
+    >
+      <i class="fa fa-plus-circle my-1"></i>
+      <b class="ml-1 d-none d-sm-block">Novo</b>
+    </a>
+  </div>
+  <div class="main-body card">
     <div
       class="
         row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4
         gutters-sm
       "
     >
-      <div class="col mb-3">
+      <div class="col mb-3" *ngFor="let usuarios of usuariosListados">
         <div class="card">
           <img
             src="../../../../assets/logoLogin.jpg"
@@ -15,31 +52,26 @@
           />
           <div class="card-body text-center">
             <img
-              src="../../../../assets/IconLessa.jpg"
+              src="../../../../assets/{{ usuarios.imagemURL }}"
               style="width: 100px; margin-top: -65px"
               alt="User"
               class="img-fluid img-thumbnail rounded-circle border-0 mb-3"
             />
-            <h5 class="card-title">Thais Lessa</h5>
-            <p class="text-secondary mb-1">Administradora</p>
-            <p class="text-muted font-size-sm">Balão</p>
+            <h5 class="card-title">{{ usuarios.nomeCompleto }}</h5>
+            <p class="text-secondary mb-1">{{ usuarios.cargo }}</p>
+            <p class="text-muted font-size-sm">{{ usuarios.nomeUsuario }}</p>
           </div>
           <div class="card-footer">
-            <button
-            type="button"
-            class="btn btn-sm"
-            tooltip="editar"
-
-          >
-            <i class="fa fa-edit"></i>
+            <button type="button" class="btn btn-sm" tooltip="editar" routerLink="/usuarios/atualizar">
+              <i class="fa fa-edit"></i>
             </button>
             <button
-            type="button"
-            class="btn btn-sm"
-            tooltip="excluir"
-
-          >
-            <i class="fa fa-trash"></i>
+              type="button"
+              class="btn btn-sm"
+              tooltip="excluir"
+              (click)="openModal(template)"
+            >
+              <i class="fa fa-trash"></i>
             </button>
           </div>
         </div>
@@ -47,3 +79,15 @@
     </div>
   </div>
 </div>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Deseja mesmo excluir?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()">
+      Sim
+    </button>
+    <button type="button" class="btn btn-primary" (click)="decline()">
+      Não
+    </button>
+  </div>
+</ng-template>

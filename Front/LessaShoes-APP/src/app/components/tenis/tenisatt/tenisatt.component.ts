@@ -12,9 +12,7 @@ import { tenis } from 'src/app/services/tenis.service';
 })
 export class TenisattComponent implements OnInit {
 
-  constructor(private TenisService: tenis,
-    private toastr: ToastrService,
-    private formB : FormBuilder) { }
+  constructor(private formB : FormBuilder) { }
 
   ngOnInit() {
     this.validacao();
@@ -22,7 +20,7 @@ export class TenisattComponent implements OnInit {
 
   public tenis: Tenis[] = [];
 
-  form = {} as FormGroup;
+  public form = {} as FormGroup;
 
   get fb(): any {
     return this.form.controls;

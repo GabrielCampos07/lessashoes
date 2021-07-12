@@ -35,7 +35,7 @@ export class TenislistaComponent implements OnInit {
     'color: white',
   ];
 
-  private _filtroLista = '';
+  private _filtroLista : string = '';
 
   public ngOnInit() {
     this.getTenis();

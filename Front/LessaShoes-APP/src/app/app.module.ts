@@ -13,6 +13,8 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrarComponent } from './components/user/registrar/registrar.component';
+import { PerfilComponent } from './components/user/perfil/perfil.component';
+import { UsuarioslistaComponent } from './components/usuarios/usuarioslista/usuarioslista.component';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,36 +24,37 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { TooltipModule  } from 'ngx-bootstrap/tooltip';
-import { BsDropdownModule,BsDropdownConfig } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { BsDropdownModule, BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 
 import { tenis } from './services/tenis.service';
-import { PerfilComponent } from './components/user/perfil/perfil.component';
-import { UsuarioslistaComponent } from './components/usuarios/usuarioslista/usuarioslista.component';
-
+import { UsuariosattComponent } from './components/usuarios/usuariosatt/usuariosatt.component';
+import { UsuariosaddComponent } from './components/usuarios/usuariosadd/usuariosadd.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-      TenisComponent,
-      NavComponent,
-      CabecalhoComponent,
-      DashboardComponent,
-      TenisaddComponent,
-      TenislistaComponent,
-      TenisattComponent,
-      UsuariosComponent,
-      UserComponent,
-      LoginComponent,
-      RegistrarComponent,
-      PerfilComponent,
-      UsuarioslistaComponent,
-   ],
+    NavComponent,
+    CabecalhoComponent,
+    DashboardComponent,
+    TenisComponent,
+    TenisaddComponent,
+    TenislistaComponent,
+    TenisattComponent,
+    UsuariosComponent,
+    UsuarioslistaComponent,
+    UsuariosattComponent,
+    UsuariosaddComponent,
+    UserComponent,
+    LoginComponent,
+    RegistrarComponent,
+    PerfilComponent,
+  ],
   imports: [
     CommonModule,
     BrowserModule,
@@ -68,13 +71,12 @@ import { UsuarioslistaComponent } from './components/usuarios/usuarioslista/usua
     TooltipModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000,
-    positionClass: 'toast-bottom-right',
-    preventDuplicates: true,
-    progressBar: true,
-  }
-    ),
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      progressBar: true,
+    }),
   ],
   providers: [tenis],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
