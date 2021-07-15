@@ -80,16 +80,15 @@ export class TenislistaComponent implements OnInit {
       (_Tenis: Tenis[]) => {
         this.tenis = _Tenis;
         this.tenisFiltrados = this.tenis;
-        this.spinner.hide();
       },
       (error) => {
-        this.spinner.hide();
         this.toastr.error('Erro ao carregar os Tenis');
       }
-    );
+    ).add(() => this.spinner.hide());
   }
 
   modalRef = {} as BsModalRef;
+
   openModal(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }

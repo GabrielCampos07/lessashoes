@@ -54,13 +54,11 @@ export class UsuarioslistaComponent implements OnInit {
       (_Usuarios: Usuario[]) => {
         this.usuarios = _Usuarios;
         this.usuariosListados = this.usuarios;
-        this.spinner.hide();
       },
       (error: any) => {
-        this.spinner.hide();
         this.toastr.error('Erro ao carregar os usuarios');
       }
-    );
+    ).add(() => this.spinner.hide());;
   }
 
   modalRef = {} as BsModalRef;

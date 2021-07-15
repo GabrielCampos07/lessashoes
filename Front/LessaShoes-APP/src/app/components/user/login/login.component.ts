@@ -20,6 +20,11 @@ export class LoginComponent implements OnInit {
     return this.form.controls;
   }
 
+
+  public cssValidador(campo: FormControl): any {
+    return {'is-invalid': campo.errors && campo.touched};
+  }
+
   public validacao(){
     this.form = this.formB.group({
     usuario: ['', [Validators.required]],

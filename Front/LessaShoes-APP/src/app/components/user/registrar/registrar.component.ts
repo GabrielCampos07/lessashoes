@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CamposValidacao } from 'src/app/Helpers/CamposValidacao';
 
 @Component({
   selector: 'app-registrar',
@@ -19,13 +20,22 @@ export class RegistrarComponent implements OnInit {
     return this.form.controls;
   }
 
-  public validacao() {
+  public cssValidador(campo: FormControl): any {
+    return {'is-invalid': campo.errors && campo.touched};
+  }
+
+  public validacao() : void {
+
+    const formOptions: AbstractControlOptions = {
+      validators : CamposValidacao.ConfirmarCampo('senha', 'confirmarSenha')
+    };
+
     this.form = this.formB.group({
       nomeCompleto: ['', [Validators.required,]],
       nomeUsuario: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       senha: ['', [Validators.required, Validators.minLength(8)]],
       confirmarSenha: ['', [Validators.required, Validators.minLength(8)]],
-    });
+    },formOptions);
   }
 }
