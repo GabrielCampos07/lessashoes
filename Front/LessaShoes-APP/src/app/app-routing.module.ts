@@ -21,8 +21,9 @@ const routes: Routes = [
   {
     path: 'usuarios', component: UsuariosComponent,
     children: [
+      { path: 'detalhe', component : UsuariosaddComponent},
+      { path: 'detalhe/:id', component : UsuariosaddComponent},
       { path: 'lista', component: UsuarioslistaComponent},
-      { path: 'adicionar', component : UsuariosaddComponent},
     ]
   },
   {

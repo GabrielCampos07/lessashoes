@@ -113,22 +113,26 @@
                     class="form-control"
                     placeholder="Seu telefone"
                     value=""
+                    formControlName="contato"
                   />
                 </div>
                 <div class="form-group">
-                  <select class="form-control">
-                    <option class="hidden" selected disabled>
-                      Cargo *
-                    </option>
-                    <option>Administrador</option>
-                    <option>Vendedor</option>
-                  </select>
+                  <input
+                    type="text"
+                    minlength="10"
+                    maxlength="10"
+                    name="txtEmpPhone"
+                    class="form-control"
+                    placeholder="seu cargo"
+                    value=""
+                    formControlName="cargo"
+                  />
                 </div>
                 <div class="form-group">
                   <label for="exampleFormControlFile1">Foto de perfil</label>
                   <input type="file" class="form-control-file" id="exampleFormControlFile1">
                 </div>
-                <input type="submit" class="btnRegister" value="Registrar" />
+              <input type="submit" class="btnRegister" value="Registrar" (click)="salvarUsuario()" />
               </div>
             </div>
           </form>

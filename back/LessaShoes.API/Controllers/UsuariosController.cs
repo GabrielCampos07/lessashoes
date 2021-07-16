@@ -112,7 +112,7 @@ namespace LessaShoes.API.Controllers
             try
             {
                 return await _usuarioService.DeleteUsuario(id)?
-                Ok("Deletado"):
+                Ok(new {message = "Deletado"}):
                 BadRequest("Não foi possível deletar o usuário");
             }
             catch (Exception ex)

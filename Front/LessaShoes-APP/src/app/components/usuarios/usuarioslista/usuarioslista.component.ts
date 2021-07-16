@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Usuario } from 'src/app/Models/Usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuarioslista',
@@ -16,11 +17,14 @@ export class UsuarioslistaComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private modalService: BsModalService,
+    private router: Router
   ) {}
 
+  public usuario = {} as Usuario;
   public usuarios: Usuario[] = [];
   public usuariosListados: Usuario[] = [];
   private _filtroLista: string = '';
+  public usuarioID = 0;
 
   ngOnInit(): void {
     this.getUsuario();
@@ -49,27 +53,52 @@ export class UsuarioslistaComponent implements OnInit {
       : this.usuarios);
   }
 
+  public detalheID(id:number)
+  {
+    this.router.navigate([`usuarios/detalhe/${id}`]);
+  }
+
   public getUsuario(): void {
-    this.usuarioService.getUsuario().subscribe(
-      (_Usuarios: Usuario[]) => {
-        this.usuarios = _Usuarios;
-        this.usuariosListados = this.usuarios;
-      },
-      (error: any) => {
-        this.toastr.error('Erro ao carregar os usuarios');
-      }
-    ).add(() => this.spinner.hide());;
+    this.usuarioService
+      .getUsuario()
+      .subscribe(
+        (_Usuarios: Usuario[]) => {
+          this.usuarios = _Usuarios;
+          this.usuariosListados = this.usuarios;
+        },
+        (error: any) => {
+          this.toastr.error('Erro ao carregar os usuarios');
+        }
+      )
+      .add(() => this.spinner.hide());
   }
 
   modalRef = {} as BsModalRef;
 
-  openModal(template: TemplateRef<any>): void {
+  openModal(template: TemplateRef<any>, usuarioID: number): void {
+    this.usuarioID = usuarioID;
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
   confirm(): void {
-    this.toastr.success('O usuário foi excluido.', 'Sucesso!');
     this.modalRef.hide();
+
+    this.usuarioService
+      .delete(this.usuarioID)
+      .subscribe(
+        (result: any) => {
+          this.toastr.success('O usuario foi excluido.', 'Sucesso!');
+          this.getUsuario();
+        },
+        (error: any) => {
+          console.error(error);
+          this.toastr.error(
+            `Erro ao tentar deletar o usuario ${this.usuarioID}`,
+            'Erro'
+          );
+        }
+      )
+      .add(() => this.spinner.hide());
   }
 
   decline(): void {

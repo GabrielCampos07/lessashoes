@@ -20,22 +20,6 @@
       Buscar
     </button>
   </div>
-  <div>
-    <a
-      class="btn"
-      routerLink="/usuarios/adicionar"
-      style="
-        width: 10%;
-        color: black;
-        position: relative;
-        left: 150vh;
-        bottom: 10vh;
-      "
-    >
-      <i class="fa fa-plus-circle my-1"></i>
-      <b class="ml-1 d-none d-sm-block">Novo</b>
-    </a>
-  </div>
   <div class="main-body card">
     <div
       class="
@@ -57,19 +41,21 @@
               alt="User"
               class="img-fluid img-thumbnail rounded-circle border-0 mb-3"
             />
-            <h5 class="card-title">{{ usuarios.nomeCompleto }}</h5>
+            <h5 class="card-title">{{usuarios.usuarioID}}
+              <br>
+              {{ usuarios.nomeCompleto }}</h5>
             <p class="text-secondary mb-1">{{ usuarios.cargo }}</p>
             <p class="text-muted font-size-sm">{{ usuarios.nomeUsuario }}</p>
           </div>
           <div class="card-footer">
-            <button type="button" class="btn btn-sm" tooltip="editar" routerLink="/usuarios/atualizar">
+            <button type="button" class="btn btn-sm" tooltip="editar" (click)="detalheID(usuarios.usuarioID)">
               <i class="fa fa-edit"></i>
             </button>
             <button
               type="button"
               class="btn btn-sm"
               tooltip="excluir"
-              (click)="openModal(template)"
+              (click)="openModal(template, usuarios.usuarioID)"
             >
               <i class="fa fa-trash"></i>
             </button>

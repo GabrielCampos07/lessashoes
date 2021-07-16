@@ -78,14 +78,14 @@ export class TenisaddComponent implements OnInit {
           () => this.spinner.hide()
         );
       } else {
-        this.id =  this.tenis.tenisID;
-        this.tenis = {...this.form.value };
+        this.id = this.tenis.tenisID;
+        this.tenis = { ...this.form.value };
         this.TenisService.put(+this.id, this.tenis).subscribe(
           () => this.toastr.success('Tênis salvo com sucesso'),
           (error: any) => {
             console.error(error);
             this.toastr.error('Erro ao salvar o tênis', 'Erro!'),
-            this.spinner.hide();
+              this.spinner.hide();
           },
           () => this.spinner.hide()
         );
