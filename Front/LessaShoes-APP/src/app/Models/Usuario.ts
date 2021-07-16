@@ -5,4 +5,6 @@ export interface Usuario {
   nomeCompleto: string
   cargo: string;
   contato: number;
+  email: string;
+  senha: number;
 }
