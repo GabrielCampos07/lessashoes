@@ -1,9 +1,10 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+
 import { NgxSpinnerService, Spinner } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+
 import { Tenis } from 'src/app/Models/Tenis';
 import { tenis } from 'src/app/services/tenis.service';
 
@@ -22,7 +23,7 @@ export class TenisaddComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getTenis();
+    this.carregarTenis();
     this.validacao();
   }
 
@@ -92,7 +93,7 @@ export class TenisaddComponent implements OnInit {
     }
   }
 
-  public getTenis(): void {
+  public carregarTenis(): void {
     const tenisIdParam = this.router.snapshot.paramMap.get('id');
 
     if (tenisIdParam !== null) {

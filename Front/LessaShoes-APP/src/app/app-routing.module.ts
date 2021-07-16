@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
+
 import { RouterModule, Routes } from '@angular/router';
+
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 import { TenisComponent } from './components/tenis/tenis.component';
@@ -7,20 +9,19 @@ import { TenisaddComponent } from './components/tenis/tenisadd/tenisadd.componen
 import { TenislistaComponent } from './components/tenis/tenislista/tenislista.component';
 
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
-import { UserComponent } from './components/user/user.component';
-import { LoginComponent } from './components/user/login/login.component';
-import { RegistrarComponent } from './components/user/registrar/registrar.component';
-import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { UsuarioslistaComponent } from './components/usuarios/usuarioslista/usuarioslista.component';
-import { UsuariosattComponent } from './components/usuarios/usuariosatt/usuariosatt.component';
 import { UsuariosaddComponent } from './components/usuarios/usuariosadd/usuariosadd.component';
+
+import { LoginComponent } from './components/user/login/login.component';
+import { PerfilComponent } from './components/user/perfil/perfil.component';
+import { RegistrarComponent } from './components/user/registrar/registrar.component';
+import { UserComponent } from './components/user/user.component';
 
 const routes: Routes = [
   {
     path: 'usuarios', component: UsuariosComponent,
     children: [
       { path: 'lista', component: UsuarioslistaComponent},
-      { path: 'atualizar', component : UsuariosattComponent},
       { path: 'adicionar', component : UsuariosaddComponent},
     ]
   },

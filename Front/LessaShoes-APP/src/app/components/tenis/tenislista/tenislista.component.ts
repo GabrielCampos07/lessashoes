@@ -41,7 +41,7 @@ export class TenislistaComponent implements OnInit {
   private _filtroLista: string = '';
 
   public ngOnInit() {
-    this.getTenis();
+    this.carregarTenis();
     this.spinner.show();
   }
 
@@ -78,7 +78,7 @@ export class TenislistaComponent implements OnInit {
     this.exibirImagem = !this.exibirImagem;
   }
 
-  public getTenis(): void {
+  public carregarTenis(): void {
     this.TenisService.getTenis()
       .subscribe(
         (_Tenis: Tenis[]) => {
@@ -111,7 +111,7 @@ export class TenislistaComponent implements OnInit {
       .subscribe(
         (result: any) => {
           this.toastr.success('O tenis foi excluido.', 'Sucesso!');
-          this.getTenis();
+          this.carregarTenis();
         },
         (error: any) => {
           console.error(error);

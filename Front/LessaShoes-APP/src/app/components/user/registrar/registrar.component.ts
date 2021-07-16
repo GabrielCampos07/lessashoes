@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { Component, OnInit } from '@angular/core';
+
 import { CamposValidacao } from 'src/app/Helpers/CamposValidacao';
 
 @Component({

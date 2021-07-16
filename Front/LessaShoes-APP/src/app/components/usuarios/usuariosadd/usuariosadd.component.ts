@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuariosadd',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsuariosaddComponent implements OnInit {
 
-  constructor() { }
+  public estadoSalvar = 'post';
+
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  public carregarTenis(): void{
   }
 
 }
