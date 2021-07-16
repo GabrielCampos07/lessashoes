@@ -1,8 +1,8 @@
 export interface Tenis {
-  imagemURL: string
-  marca: string
   tenisID: number
   nomeTenis: string
+  marca: string
+  imagemURL: string
   tamanho: number
   qtdTenis: number
 }

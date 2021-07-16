@@ -5,7 +5,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TenisComponent } from './components/tenis/tenis.component';
 import { TenisaddComponent } from './components/tenis/tenisadd/tenisadd.component';
 import { TenislistaComponent } from './components/tenis/tenislista/tenislista.component';
-import { TenisattComponent } from './components/tenis/tenisatt/tenisatt.component';
 
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UserComponent } from './components/user/user.component';
@@ -38,9 +37,9 @@ const routes: Routes = [
     path: 'tenis',
     component: TenisComponent,
     children: [
-      { path: 'adicionar', component: TenisaddComponent },
+      { path: 'detalhe/:id', component: TenisaddComponent },
+      { path: 'detalhe', component: TenisaddComponent },
       { path: 'lista', component: TenislistaComponent },
-      { path: 'atualizar', component: TenisattComponent },
     ],
   },
   { path: 'dashboard', component: DashboardComponent },

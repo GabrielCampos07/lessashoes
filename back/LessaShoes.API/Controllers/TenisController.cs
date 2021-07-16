@@ -106,7 +106,7 @@ namespace LessaShoes.API.Controllers
             try
             {
                 return await _TenisService.Delete(id) ?
-                Ok("Deletado") :
+                Ok(new {message = "Deletado"}) :
                 BadRequest("Tenis não deletado");
             }
             catch (Exception ex)

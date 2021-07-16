@@ -7,7 +7,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TenisComponent } from './components/tenis/tenis.component';
 import { TenisaddComponent } from './components/tenis/tenisadd/tenisadd.component';
 import { TenislistaComponent } from './components/tenis/tenislista/tenislista.component';
-import { TenisattComponent } from './components/tenis/tenisatt/tenisatt.component';
 
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UserComponent } from './components/user/user.component';
@@ -45,7 +44,6 @@ import { UsuariosaddComponent } from './components/usuarios/usuariosadd/usuarios
     TenisComponent,
     TenisaddComponent,
     TenislistaComponent,
-    TenisattComponent,
     UsuariosComponent,
     UsuarioslistaComponent,
     UsuariosattComponent,
