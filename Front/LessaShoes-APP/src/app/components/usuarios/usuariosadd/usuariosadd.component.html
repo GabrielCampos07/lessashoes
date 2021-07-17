@@ -13,6 +13,7 @@
             style="width: 100px; margin-top: -65px"
             alt="User"
             class="img-fluid img-thumbnail rounded-circle border-0 mb-3"
+            (click)="file.click()"
           />
           <h5 class="card-title">
             {{ Usuarios.nomeCompleto }}
@@ -91,7 +92,7 @@
           class="form-control-file"
           id="exampleFormControlFile1"
           #file
-          (change)="mudarArquivo($event)"
+          (change)="mudarImagem($event)"
         />
       </div>
     </div>

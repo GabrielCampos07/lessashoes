@@ -55,7 +55,7 @@ export class TenisaddComponent implements OnInit {
         [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
       ],
       qtdTenis: ['', [Validators.required, Validators.minLength(1)]],
-      imagemURL: ['', [Validators.required]],
+      imagemURL: ['',],
     });
   }
 

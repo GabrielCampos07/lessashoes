@@ -1,3 +1,4 @@
+using System.IO;
 using LessaShoes.Application;
 using LessaShoes.Application.Contratos;
 using LessaShoes.Persistance;
@@ -5,9 +6,11 @@ using LessaShoes.Persistance.Contratados;
 using LessaShoes.Persistance.Contratos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
@@ -25,11 +28,11 @@ namespace LessaShoes.API
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {   
+        {
             services.AddDbContext<LessaShoesContext>(
                 x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
             );
-            
+
             services.AddControllers();
 
             services.AddScoped<IUsuarioService, UsuarioService>();
@@ -60,10 +63,16 @@ namespace LessaShoes.API
 
             app.UseAuthorization();
 
-            app.UseCors(x =>x
+            app.UseCors(x => x
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowAnyOrigin());
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Recursos")),
+                RequestPath = new PathString("/Recursos")
+            });
 
             app.UseEndpoints(endpoints =>
             {

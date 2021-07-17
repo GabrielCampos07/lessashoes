@@ -29,8 +29,8 @@ export class UsuariosaddComponent implements OnInit {
 
   public form!: FormGroup;
 
-  public arquivo!: File;
-
+  public arquivo: File[] = [];
+  public idUsuario!: number;
   public id = 0;
 
   public Usuarios = {} as Usuario;
@@ -50,7 +50,7 @@ export class UsuariosaddComponent implements OnInit {
       cargo: ['', [Validators.required]],
       contato: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      imagemURL: ['', [Validators.required]],
+      imagemURL: [''],
     });
   }
 
@@ -64,9 +64,11 @@ export class UsuariosaddComponent implements OnInit {
           (usuarios: Usuario) => {
             this.Usuarios = { ...usuarios };
             this.form.patchValue(this.Usuarios);
-            if (this.Usuarios.imagemURL !== '')
-            {
-              this.imagemURL = environment.apiURL + 'Recursos/imagens/' + this.Usuarios.imagemURL;
+            if (this.Usuarios.imagemURL !== null) {
+              this.imagemURL =
+                environment.apiURL +
+                'Recursos/imagens/' +
+                this.Usuarios.imagemURL;
             }
           },
           (error: any) => {
@@ -103,12 +105,32 @@ export class UsuariosaddComponent implements OnInit {
     }
   }
 
-  public mudarArquivo(ev: any): void {
+  public mudarImagem(ev: any) {
     const leitor = new FileReader();
 
-    leitor.onload = (ev: any) => (this.imagemURL = ev.target.result);
+    leitor.onload = (evento: any) => (this.imagemURL = evento.target.result);
 
     this.arquivo = ev.target.files;
-    leitor.readAsDataURL(this.arquivo);
+    leitor.readAsDataURL(this.arquivo[0]);
+
+    this.uploadImagem();
+  }
+
+  public uploadImagem(): void {
+    this.idUsuario = this.Usuarios.usuarioID;
+    this.spinner.show();
+    this.usuariosService
+      .postUpload(this.idUsuario, this.arquivo)
+      .subscribe(
+        () => {
+          this.carregarUsuarios();
+          this.toastr.success('Sucesso ao atualizar a imagem', 'Sucesso');
+        },
+        (error: any) => {
+          console.error(error);
+          this.toastr.error('Não foi possível atualizar a imagem', 'Erro!');
+        }
+      )
+      .add(() => this.spinner.hide());
   }
 }

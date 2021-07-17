@@ -107,9 +107,9 @@ export class UsuarioslistaComponent implements OnInit {
   }
 
   public mostraImagem(imagemURL: string): string {
-    return (imagemURL !== '')
+    return (imagemURL !== null)
       ? `${environment.apiURL}Recursos/imagens/${imagemURL}`
-      : 'assets/thais.png';
+      : 'assets/thais2.png';
   }
 
 }
