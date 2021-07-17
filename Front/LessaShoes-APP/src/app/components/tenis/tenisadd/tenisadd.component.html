@@ -1,5 +1,28 @@
 <form [formGroup]="form">
   <div class="form-row">
+    <div class="card-position" *ngIf="tenis">
+      <div class="card">
+        <img
+          src="../../../../assets/logoLogin.jpg"
+          alt="Cover"
+          class="card-img-top"
+        />
+        <div class="card-body text-center">
+          <img
+            [src]="imagemURL"
+            style="width: 100px; margin-top: -65px"
+            alt="User"
+            class="img-fluid img-thumbnail rounded-circle border-0 mb-3"
+            (click)="file.click()"
+          />
+          <h5 class="card-title">{{tenis.tenisID}}
+            <br>
+            {{ tenis.nomeTenis }}</h5>
+          <p class="text-secondary mb-1">{{ tenis.marca }}</p>
+          <p class="text-muted font-size-sm">{{ tenis.tamanho }}</p>
+        </div>
+      </div>
+    </div>
     <div class="form-group col-md-4">
       <label for="inputEmail4">Nome</label>
       <input
@@ -9,6 +32,7 @@
         formControlName="nomeTenis"
         placeholder="Nome do tênis"
         [ngClass]="{ 'is-invalid': fb.nomeTenis.errors && fb.nomeTenis.touched }"
+        [(ngModel)]="tenis.nomeTenis"
       />
       <div *ngIf="fb.nomeTenis.errors?.required" class="invalid-feedback">
         Nome é obrigatório
@@ -65,12 +89,12 @@
   <div class="form-group col-md-4">
     <label for="inputAddress">imagem</label>
     <input
-      type="text"
-      class="form-control"
-      id="inputAddress"
-      placeholder="Imagem"
-      formControlName="imagemURL"
-    />
+    type="file"
+    class="form-control-file"
+    id="exampleFormControlFile1"
+    #file
+    (change)="mudarImagem($event)"
+  />
   </div>
   <hr />
   <div class="justify-content-around">

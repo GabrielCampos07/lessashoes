@@ -155,7 +155,7 @@ namespace LessaShoes.API.Controllers
                 }
                 else
                 {
-                    throw new Exception("Ocorreu um erro ao deletar o arquivo");
+                    throw new Exception("Ocorreu um erro ao deletar o usuário");
                 }
             }
             catch (Exception ex)

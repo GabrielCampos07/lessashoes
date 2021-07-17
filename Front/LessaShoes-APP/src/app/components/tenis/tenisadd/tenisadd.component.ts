@@ -27,6 +27,9 @@ export class TenisaddComponent implements OnInit {
     this.validacao();
   }
 
+  public imagemURL = 'assets/thais2.png'
+  public arquivo: File[] = [];
+  public idUsuario!: number;
   tenis = {} as Tenis;
 
   // Código do form
@@ -55,7 +58,7 @@ export class TenisaddComponent implements OnInit {
         [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
       ],
       qtdTenis: ['', [Validators.required, Validators.minLength(1)]],
-      imagemURL: ['',],
+      imagemURL: ['',]
     });
   }
 
@@ -113,5 +116,34 @@ export class TenisaddComponent implements OnInit {
         )
         .add(() => this.spinner.hide());
     }
+  }
+
+  public mudarImagem(ev: any) {
+    const leitor = new FileReader();
+
+    leitor.onload = (evento: any) => (this.imagemURL = evento.target.result);
+
+    this.arquivo = ev.target.files;
+    leitor.readAsDataURL(this.arquivo[0]);
+
+    this.uploadImagem();
+  }
+
+  public uploadImagem(): void {
+    this.idUsuario = this.tenis.tenisID;
+    this.spinner.show();
+    this.TenisService
+      .postUpload(this.idUsuario, this.arquivo)
+      .subscribe(
+        () => {
+          this.carregarTenis();
+          this.toastr.success('Sucesso ao atualizar a imagem', 'Sucesso');
+        },
+        (error: any) => {
+          console.error(error);
+          this.toastr.error('Não foi possível atualizar a imagem', 'Erro!');
+        }
+      )
+      .add(() => this.spinner.hide());
   }
 }

@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Tenis } from 'src/app/Models/Tenis';
 import { tenis } from 'src/app/services/tenis.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tenislista',
@@ -53,7 +54,7 @@ export class TenislistaComponent implements OnInit {
     this._filtroLista = value;
   }
 
-  public buscar(): Tenis[] {
+  public Buscar(): Tenis[] {
     return (this.tenisFiltrados = this.filtroLista
       ? this.filtrarTenis(this.filtroLista)
       : this.tenis);
@@ -64,6 +65,12 @@ export class TenislistaComponent implements OnInit {
     return this.tenis.filter(
       (tenis) => tenis.nomeTenis.toLocaleLowerCase().indexOf(filtrarPor) != -1
     );
+  }
+
+  public mostraImagem(imagemURL: string): string {
+    return (imagemURL !== null)
+      ? `${environment.apiURL}Recursos/imagens/${imagemURL}`
+      : 'assets/thais2.png';
   }
 
   public alternarImagem(): void {
@@ -90,6 +97,11 @@ export class TenislistaComponent implements OnInit {
         }
       )
       .add(() => this.spinner.hide());
+  }
+
+  public detalheID(id:number)
+  {
+    this.router.navigate([`tenis/detalhe/${id}`]);
   }
 
   modalRef = {} as BsModalRef;

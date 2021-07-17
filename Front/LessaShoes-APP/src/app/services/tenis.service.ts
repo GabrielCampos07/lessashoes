@@ -48,5 +48,16 @@ export class tenis {
     .delete(`${this.BaseURL}/${id}`)
     .pipe(take(1));
   }
+
+  public postUpload(tenisId: number, arquivo: File[]): Observable<Tenis> {
+    const arquivoUpload = arquivo[0] as File;
+    const formData = new FormData();
+
+    formData.append('arquivo', arquivoUpload);
+
+    return this.http
+      .post<Tenis>(`${this.BaseURL}/upload/${tenisId}`, formData)
+      .pipe(take(1));
+  }
 }
 
