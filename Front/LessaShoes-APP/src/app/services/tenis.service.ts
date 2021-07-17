@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 
 export class tenis {
-  BaseURL = 'https://localhost:5001/api/tenis';
+  BaseURL = environment.apiURL + 'api/tenis';
 
   constructor(private http: HttpClient) {}
 

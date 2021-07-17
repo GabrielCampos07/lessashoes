@@ -1,82 +1,111 @@
-<form [formGroup]="form">
-  <div class="form-row">
-    <div class="form-group col-md-4">
-      <label for="inputEmail4">Nome</label>
-      <input
-        type="text"
-        class="form-control"
-        id="inputEmail4"
-        placeholder="Nome do usuário"
-        formControlName="nomeCompleto"
-        [ngClass]="cssValidador(f.nomeCompleto)"
-      />
+<div class="row">
+  <form [formGroup]="form">
+    <div class="card-position" *ngIf="Usuarios">
+      <div class="card">
+        <img
+          src="../../../../assets/logoLogin.jpg"
+          alt="Cover"
+          class="card-img-top"
+        />
+        <div class="card-body text-center">
+          <img
+            [src]="imagemURL"
+            style="width: 100px; margin-top: -65px"
+            alt="User"
+            class="img-fluid img-thumbnail rounded-circle border-0 mb-3"
+          />
+          <h5 class="card-title">
+            {{ Usuarios.nomeCompleto }}
+          </h5>
+          <p class="text-secondary mb-1">{{ Usuarios.cargo }}</p>
+          <p class="text-muted font-size-sm">{{ Usuarios.nomeUsuario }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputEmail4">Nome</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputEmail4"
+          placeholder="Nome do usuário"
+          formControlName="nomeCompleto"
+          [ngClass]="cssValidador(f.nomeCompleto)"
+          [(ngModel)]="Usuarios.nomeCompleto"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputState">Nome usuário</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputEmail4"
+          placeholder="Usuario"
+          formControlName="nomeUsuario"
+          [ngClass]="cssValidador(f.nomeUsuario)"
+          [(ngModel)]="Usuarios.nomeUsuario"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputState">Cargo</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputEmail4"
+          placeholder="Cargo"
+          formControlName="cargo"
+          [ngClass]="cssValidador(f.cargo)"
+          [(ngModel)]="Usuarios.cargo"
+        />
+      </div>
     </div>
     <div class="form-group col-md-4">
-      <label for="inputState">Nome usuário</label>
-      <input
-        type="text"
-        class="form-control"
-        id="inputEmail4"
-        placeholder="Usuario"
-        formControlName="nomeUsuario"
-        [ngClass]="cssValidador(f.nomeUsuario)"
-      />
-    </div>
-    <div class="form-group col-md-4">
-      <label for="inputState">Cargo</label>
-      <input
-        type="text"
-        class="form-control"
-        id="inputEmail4"
-        placeholder="Cargo"
-        formControlName="cargo"
-        [ngClass]="cssValidador(f.cargo)"
-      />
-    </div>
-  </div>
-  <div class="form-group col-md-4">
-    <label for="inputAddress">Seu telefone</label>
-    <input
-      type="text"
-      class="form-control"
-      id="inputAddress"
-      placeholder="Digite seu telefone"
-      formControlName="contato"
-      [ngClass]="cssValidador(f.contato)"
-    />
-  </div>
-  <div class="form-group col-md-4">
-    <label for="inputAddress">E-mail</label>
-    <input
-      type="email"
-      class="form-control"
-      id="inputAddress"
-      placeholder="Seu e-mail"
-      formControlName="email"
-      [ngClass]="cssValidador(f.email)"
-    />
-    <div class="form-group col-md-4">
-      <label for="inputAddress">imagem</label>
+      <label for="inputAddress">Seu telefone</label>
       <input
         type="text"
         class="form-control"
         id="inputAddress"
-        placeholder="Imagem"
-        formControlName="imagemURL"
-        [ngClass]="cssValidador(f.imagemURL)"
+        placeholder="Digite seu telefone"
+        formControlName="contato"
+        [ngClass]="cssValidador(f.contato)"
+        [(ngModel)]="Usuarios.contato"
       />
     </div>
-  </div>
-  <hr />
-  <div class="justify-content-around">
-    <button
-      type="submit"
-      class="btn"
-      style="background: black; color: white"
-      [disabled]="!form.valid"
-      (click)="salvarAlteracao()"
-    >
-      Salvar
-    </button>
-  </div>
-</form>
+    <div class="form-group col-md-4">
+      <label for="inputAddress">E-mail</label>
+      <input
+        type="email"
+        class="form-control"
+        id="inputAddress"
+        placeholder="Seu e-mail"
+        formControlName="email"
+        [ngClass]="cssValidador(f.email)"
+        [(ngModel)]="Usuarios.email"
+      />
+      <div class="form-group col-md-4">
+        <label for="inputAddress">imagem</label>
+        <input
+          type="file"
+          class="form-control-file"
+          id="exampleFormControlFile1"
+          #file
+          (change)="mudarArquivo($event)"
+        />
+      </div>
+    </div>
+    <hr />
+    <div class="justify-content-around">
+      <button
+        type="submit"
+        class="btn"
+        style="background: black; color: white"
+        [disabled]="!form.valid"
+        (click)="salvarAlteracao()"
+      >
+        Salvar
+      </button>
+    </div>
+  </form>
+</div>

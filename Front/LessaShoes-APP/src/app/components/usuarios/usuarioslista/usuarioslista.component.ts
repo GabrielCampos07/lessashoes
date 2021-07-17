@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Usuario } from 'src/app/Models/Usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-usuarioslista',
@@ -104,4 +105,11 @@ export class UsuarioslistaComponent implements OnInit {
   decline(): void {
     this.modalRef.hide();
   }
+
+  public mostraImagem(imagemURL: string): string {
+    return (imagemURL !== '')
+      ? `${environment.apiURL}Recursos/imagens/${imagemURL}`
+      : 'assets/thais.png';
+  }
+
 }

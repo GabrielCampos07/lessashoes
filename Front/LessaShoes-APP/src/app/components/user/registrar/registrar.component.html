@@ -107,25 +107,25 @@
                 <div class="form-group">
                   <input
                     type="text"
-                    minlength="10"
-                    maxlength="10"
                     name="txtEmpPhone"
                     class="form-control"
                     placeholder="Seu telefone"
                     value=""
                     formControlName="contato"
+                    [ngClass]="cssValidador(fb.contato)"
                   />
+                </div>
+                <div *ngIf="fb.contato.errors?.maxlength" class="invalid-feedback">
+                  Digite um e-mail válido
                 </div>
                 <div class="form-group">
                   <input
                     type="text"
-                    minlength="10"
-                    maxlength="10"
-                    name="txtEmpPhone"
                     class="form-control"
                     placeholder="seu cargo"
                     value=""
                     formControlName="cargo"
+                    [ngClass]="cssValidador(fb.cargo)"
                   />
                 </div>
                 <div class="form-group">

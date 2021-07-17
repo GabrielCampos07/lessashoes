@@ -69,7 +69,7 @@ export class RegistrarComponent implements OnInit {
         senha: ['', [Validators.required, Validators.minLength(8)]],
         confirmarSenha: ['', [Validators.required, Validators.minLength(8)]],
         cargo:['',[Validators.required]],
-        contato: ['',[Validators.required]]
+        contato: ['',[Validators.required, Validators.maxLength(15)]]
       },
       formOptions
     );

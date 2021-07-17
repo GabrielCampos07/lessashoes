@@ -10,6 +10,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Usuario } from 'src/app/Models/Usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { environment } from 'src/environments/environment';
+import { isThisTypeNode } from 'typescript';
 
 @Component({
   selector: 'app-usuariosadd',
@@ -27,9 +29,13 @@ export class UsuariosaddComponent implements OnInit {
 
   public form!: FormGroup;
 
+  public arquivo!: File;
+
   public id = 0;
 
   public Usuarios = {} as Usuario;
+
+  public imagemURL = 'assets/thais2.png';
 
   ngOnInit(): void {
     this.validacao();
@@ -58,6 +64,10 @@ export class UsuariosaddComponent implements OnInit {
           (usuarios: Usuario) => {
             this.Usuarios = { ...usuarios };
             this.form.patchValue(this.Usuarios);
+            if (this.Usuarios.imagemURL !== '')
+            {
+              this.imagemURL = environment.apiURL + 'Recursos/imagens/' + this.Usuarios.imagemURL;
+            }
           },
           (error: any) => {
             console.error(error);
@@ -80,16 +90,25 @@ export class UsuariosaddComponent implements OnInit {
 
     if (this.form.valid) {
       this.id = this.Usuarios.usuarioID;
-        this.Usuarios = { ...this.form.value };
-        this.usuariosService.put(+this.id, this.Usuarios).subscribe(
-          () => this.toastr.success('Usuario salvo com sucesso'),
-          (error: any) => {
-            console.error(error);
-            this.toastr.error('Erro ao salvar o usuario', 'Erro!'),
-              this.spinner.hide();
-          },
-          () => this.spinner.hide()
-        );
-      }
+      this.Usuarios = { ...this.form.value };
+      this.usuariosService.put(+this.id, this.Usuarios).subscribe(
+        () => this.toastr.success('Usuario salvo com sucesso'),
+        (error: any) => {
+          console.error(error);
+          this.toastr.error('Erro ao salvar o usuario', 'Erro!'),
+            this.spinner.hide();
+        },
+        () => this.spinner.hide()
+      );
     }
+  }
+
+  public mudarArquivo(ev: any): void {
+    const leitor = new FileReader();
+
+    leitor.onload = (ev: any) => (this.imagemURL = ev.target.result);
+
+    this.arquivo = ev.target.files;
+    leitor.readAsDataURL(this.arquivo);
+  }
 }
