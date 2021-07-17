@@ -113,11 +113,12 @@ namespace LessaShoes.API.Controllers
                 var usuarios = await _usuarioService.AddUsuario(model);
                 if (usuarios == null) return NotFound("Não foi possível adicionar o usuário");
 
-                return Ok(model);
+                return Ok(usuarios);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar adicionar um novo tenis. Erro{ex.Message}");
             }
         }
 

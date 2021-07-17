@@ -26,7 +26,9 @@ export class UsuarioService {
   }
 
   public post(usuario: Usuario): Observable<Usuario> {
-    return this.http.post<Usuario>(this.baseURL, usuario).pipe(take(1));
+    return this.http
+    .post<Usuario>(this.baseURL, usuario)
+    .pipe(take(1));
   }
 
   public put(id: number, usuario: Usuario): Observable<Usuario> {
