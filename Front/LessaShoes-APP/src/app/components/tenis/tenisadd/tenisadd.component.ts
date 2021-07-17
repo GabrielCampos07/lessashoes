@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Tenis } from 'src/app/Models/Tenis';
 import { tenis } from 'src/app/services/tenis.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tenisadd',
@@ -19,7 +20,8 @@ export class TenisaddComponent implements OnInit {
     private toastr: ToastrService,
     private router: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private formB: FormBuilder
+    private formB: FormBuilder,
+    private route: Router
   ) {}
 
   ngOnInit() {
@@ -27,7 +29,7 @@ export class TenisaddComponent implements OnInit {
     this.validacao();
   }
 
-  public imagemURL = 'assets/thais2.png'
+  public imagemURL = 'assets/thais2.png';
   public arquivo: File[] = [];
   public idUsuario!: number;
   tenis = {} as Tenis;
@@ -58,7 +60,7 @@ export class TenisaddComponent implements OnInit {
         [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
       ],
       qtdTenis: ['', [Validators.required, Validators.minLength(1)]],
-      imagemURL: ['',]
+      imagemURL: [''],
     });
   }
 
@@ -73,7 +75,10 @@ export class TenisaddComponent implements OnInit {
       if (this.estadoSalvar === 'post') {
         this.tenis = { ...this.form.value };
         this.TenisService.post(this.tenis).subscribe(
-          () => this.toastr.success('Tênis salvo com sucesso'),
+          (tenisRetorno: Tenis) => {
+            this.route.navigate([`tenis/detalhe/${tenisRetorno.tenisID}`]);
+            this.toastr.success('Tênis salvo com sucesso');
+          },
           (error: any) => {
             this.toastr.error('Erro ao salvar o tênis', 'Erro!'),
               this.spinner.hide();
@@ -84,7 +89,10 @@ export class TenisaddComponent implements OnInit {
         this.id = this.tenis.tenisID;
         this.tenis = { ...this.form.value };
         this.TenisService.put(+this.id, this.tenis).subscribe(
-          () => this.toastr.success('Tênis salvo com sucesso'),
+          (tenisRetorno: Tenis) => {
+            this.route.navigate([`tenis/lista`]);
+            this.toastr.success('Tênis salvo com sucesso')
+        },
           (error: any) => {
             console.error(error);
             this.toastr.error('Erro ao salvar o tênis', 'Erro!'),
@@ -104,11 +112,18 @@ export class TenisaddComponent implements OnInit {
 
       this.estadoSalvar = 'put';
 
-      this.TenisService.getTenisById(+tenisIdParam)
+      this.TenisService
+      .getTenisById(+tenisIdParam)
         .subscribe(
           (tenis: Tenis) => {
             this.tenis = { ...tenis };
             this.form.patchValue(this.tenis);
+            if (this.tenis.imagemURL !== null) {
+              this.imagemURL =
+                environment.apiURL +
+                'Recursos/imagens/' +
+                this.tenis.imagemURL;
+            }
           },
           (error: any) => {
             console.error(error);
@@ -132,8 +147,7 @@ export class TenisaddComponent implements OnInit {
   public uploadImagem(): void {
     this.idUsuario = this.tenis.tenisID;
     this.spinner.show();
-    this.TenisService
-      .postUpload(this.idUsuario, this.arquivo)
+    this.TenisService.postUpload(this.idUsuario, this.arquivo)
       .subscribe(
         () => {
           this.carregarTenis();

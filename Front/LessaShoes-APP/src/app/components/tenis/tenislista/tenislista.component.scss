@@ -113,3 +113,18 @@
   position: absolute;
   left: 120vh;
 }
+
+.card-footer{
+  display: flex;
+}
+
+.btn-sm {
+  border-color: black;
+  width: 50%;
+  margin-left: 4px;
+}
+
+.btn-sm:hover {
+  background-color: black;
+  color: white;
+}

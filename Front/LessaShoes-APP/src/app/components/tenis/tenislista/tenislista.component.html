@@ -20,7 +20,23 @@
       Buscar
     </button>
   </div>
-  <div class="main-body card">
+  <div>
+    <a
+      class="btn"
+      routerLink="/tenis/detalhe"
+      style="
+        width: 10%;
+        color: black;
+        position: relative;
+        left: 150vh;
+        bottom: 10vh;
+      "
+    >
+      <i class="fa fa-plus-circle my-1"></i>
+      <b class="ml-1 d-none d-sm-block">Novo</b>
+    </a>
+  </div>
+  <div class="main-body card" style="position: relative; bottom: 50px;">
     <div
       class="
         row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4
@@ -28,7 +44,7 @@
       "
     >
       <div class="col mb-3" *ngFor="let tenis of tenisFiltrados">
-        <div class="card">
+        <div class="card" >
           <img
             src="../../../../assets/logoLogin.jpg"
             alt="Cover"
