@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using LessaShoes.Domain;
 using LessaShoes.Application.Contratos;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 namespace LessaShoes.API.Controllers
 {
     [ApiController]
-    [Route("api")]
+    [Route("/api/tenis")]
     public class TenisController : ControllerBase
     {
         private readonly ITenisService _TenisService;
@@ -109,7 +106,7 @@ namespace LessaShoes.API.Controllers
             try
             {
                 return await _TenisService.Delete(id) ?
-                Ok("Deletado") :
+                Ok(new {message = "Deletado"}) :
                 BadRequest("Tenis não deletado");
             }
             catch (Exception ex)

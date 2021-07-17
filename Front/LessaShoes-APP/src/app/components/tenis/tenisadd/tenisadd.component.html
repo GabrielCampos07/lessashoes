@@ -6,41 +6,41 @@
         type="text"
         class="form-control"
         id="inputEmail4"
-        formControlName="nome"
+        formControlName="nomeTenis"
         placeholder="Nome do tênis"
-        [ngClass]="{ 'is-invalid': fb.nome.errors && fb.nome.touched }"
+        [ngClass]="{ 'is-invalid': fb.nomeTenis.errors && fb.nomeTenis.touched }"
       />
-      <div *ngIf="fb.nome.errors?.required" class="invalid-feedback">
+      <div *ngIf="fb.nomeTenis.errors?.required" class="invalid-feedback">
         Nome é obrigatório
       </div>
-      <div *ngIf="fb.nome.errors?.minlength" class="invalid-feedback">
+      <div *ngIf="fb.nomeTenis.errors?.minlength" class="invalid-feedback">
         Minimo de 4 caracteres
       </div>
-      <div *ngIf="fb.nome.errors?.maxlength" class="invalid-feedback">
+      <div *ngIf="fb.nomeTenis.errors?.maxlength" class="invalid-feedback">
         Máximo de 20 caracteres
       </div>
     </div>
     <div class="form-group col-md-4">
       <label for="inputState">Marca</label>
-      <select id="inputState" class="form-control">
-        <option>Escolha uma marca</option>
-        <option>Nike</option>
-        <option>Adidas</option>
-        <option>Sal e Pimenta</option>
-        <option>Allstar</option>
-        <option>Vans</option>
-      </select>
+      <input
+        type="text"
+        class="form-control"
+        id="inputEmail4"
+        placeholder="Marca do tênis"
+        formControlName="marca"
+        [ngClass]="{ 'is-invalid': fb.marca.errors && fb.marca.touched }"
+      />
     </div>
     <div class="form-group col-md-4">
       <label for="inputState">Tamanho</label>
-      <select id="inputState" class="form-control">
-        <option>Escolha um tamanho</option>
-        <option>36</option>
-        <option>37</option>
-        <option>38</option>
-        <option>39</option>
-        <option>40</option>
-      </select>
+      <input
+        type="text"
+        class="form-control"
+        id="inputEmail4"
+        placeholder="Tamanho do tênis"
+        formControlName="tamanho"
+        [ngClass]="{ 'is-invalid': fb.tamanho.errors && fb.tamanho.touched }"
+      />
     </div>
   </div>
   <div class="form-group col-md-4">
@@ -49,18 +49,28 @@
       type="number"
       class="form-control"
       id="inputAddress"
-      formControlName="quantidade"
+      formControlName="qtdTenis"
       placeholder="Digite uma quantidade"
       [ngClass]="{
-        'is-invalid': fb.quantidade.errors && fb.quantidade.touched
+        'is-invalid': fb.qtdTenis.errors && fb.qtdTenis.touched
       }"
     />
-    <div *ngIf="fb.quantidade.errors?.required" class="invalid-feedback">
+    <div *ngIf="fb.qtdTenis.errors?.required" class="invalid-feedback">
       Quantidade é obrigatória
     </div>
-    <div *ngIf="fb.quantidade.errors?.minlength" class="invalid-feedback">
+    <div *ngIf="fb.qtdTenis.errors?.minlength" class="invalid-feedback">
       Minimo de 1 caracter é obrigatório
     </div>
+  </div>
+  <div class="form-group col-md-4">
+    <label for="inputAddress">imagem</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputAddress"
+      placeholder="Imagem"
+      formControlName="imagemURL"
+    />
   </div>
   <hr />
   <div class="justify-content-around">
@@ -77,8 +87,9 @@
       class="btn"
       style="background: black; color: white"
       [disabled]="!form.valid"
+      (click)="salvarAlteracao()"
     >
-      Atualizar tênis
+      Salvar
     </button>
   </div>
 </form>

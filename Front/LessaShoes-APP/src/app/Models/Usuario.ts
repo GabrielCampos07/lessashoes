@@ -1,7 +1,10 @@
 export interface Usuario {
-  imagemURL: string;
   usuarioID: number;
+  imagemURL: string;
   nomeUsuario: string;
-  idade: number;
+  nomeCompleto: string
   cargo: string;
+  contato: number;
+  email: string;
+  senha: number;
 }

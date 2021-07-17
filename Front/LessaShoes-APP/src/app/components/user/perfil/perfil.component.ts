@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Usuario } from 'src/app/Models/Usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PerfilComponent implements OnInit {
 
-  constructor() { }
+  public usuarios : Usuario [] = []
+
+  constructor(private usuarioService : UsuarioService) { }
 
   ngOnInit(): void {
+  }
+
+  public getUsuario() : void
+  {
+    this.usuarioService.getUsuario().subscribe(
+      (_usuarios : Usuario[]) => {
+        this.usuarios;
+      },
+
+      (error) => {
+        "Não foi possível carregar o erro"
+      }
+    );
   }
 
 }

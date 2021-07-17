@@ -1,4 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,10 +19,12 @@ export class TenislistaComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: BsModalService,
     private spinner: NgxSpinnerService,
+    private router: Router
   ) {}
 
   public tenisFiltrados: Tenis[] = [];
   public tenis: Tenis[] = [];
+  public tenisID = 0;
 
   public margemImagem: number = 30;
   public larguraImagem: number = 30;
@@ -35,10 +38,10 @@ export class TenislistaComponent implements OnInit {
     'color: white',
   ];
 
-  private _filtroLista = '';
+  private _filtroLista: string = '';
 
   public ngOnInit() {
-    this.getTenis();
+    this.carregarTenis();
     this.spinner.show();
   }
 
@@ -75,31 +78,53 @@ export class TenislistaComponent implements OnInit {
     this.exibirImagem = !this.exibirImagem;
   }
 
-  public getTenis(): void {
-    this.TenisService.getTenis().subscribe(
-      (_Tenis: Tenis[]) => {
-        this.tenis = _Tenis;
-        this.tenisFiltrados = this.tenis;
-        this.spinner.hide();
-      },
-      (error) => {
-        this.spinner.hide();
-        this.toastr.error('Erro ao carregar os Tenis');
-      }
-    );
+  public carregarTenis(): void {
+    this.TenisService.getTenis()
+      .subscribe(
+        (_Tenis: Tenis[]) => {
+          this.tenis = _Tenis;
+          this.tenisFiltrados = this.tenis;
+        },
+        (error) => {
+          this.toastr.error('Erro ao carregar os Tenis');
+        }
+      )
+      .add(() => this.spinner.hide());
   }
 
   modalRef = {} as BsModalRef;
-  openModal(template: TemplateRef<any>): void {
+
+  public openModal(template: TemplateRef<any>, tenisID: number): void {
+    this.tenisID = tenisID;
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
-  confirm(): void {
-    this.toastr.success('O tenis foi excluido.', 'Sucesso!');
-    this.modalRef.hide();
+  public tenisAtulizar(id: number): void {
+    this.router.navigate([`tenis/detalhe/${id}`]);
   }
 
-  decline(): void {
+  public confirm(): void {
+    this.modalRef.hide();
+    this.spinner.show();
+
+    this.TenisService.delete(this.tenisID)
+      .subscribe(
+        (result: any) => {
+          this.toastr.success('O tenis foi excluido.', 'Sucesso!');
+          this.carregarTenis();
+        },
+        (error: any) => {
+          console.error(error);
+          this.toastr.error(
+            `Erro ao tentar deletar o evento ${this.tenisID}`,
+            'Erro'
+          );
+        }
+      )
+      .add(() => this.spinner.hide());
+  }
+
+  public decline(): void {
     this.modalRef.hide();
   }
 }

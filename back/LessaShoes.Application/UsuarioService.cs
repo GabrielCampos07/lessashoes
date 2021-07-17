@@ -10,9 +10,9 @@ namespace LessaShoes.Application
     public class UsuarioService : IUsuarioService
     {
         private readonly IGeralPersist _GeralPersist;
-        private UsuarioPersist _UsuarioPersist;
+        private readonly IUsuarioPersist _UsuarioPersist;
 
-        public UsuarioService(IGeralPersist GeralPersist, UsuarioPersist UsuarioPersist)
+        public UsuarioService(IGeralPersist GeralPersist, IUsuarioPersist UsuarioPersist)
         {
             _GeralPersist = GeralPersist;
             _UsuarioPersist = UsuarioPersist;
