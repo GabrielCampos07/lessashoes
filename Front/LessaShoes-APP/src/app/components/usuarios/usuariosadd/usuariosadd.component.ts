@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Usuario } from 'src/app/Models/Usuario';
@@ -24,7 +24,8 @@ export class UsuariosaddComponent implements OnInit {
     private usuariosService: UsuarioService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: Router
   ) {}
 
   public form!: FormGroup;
@@ -94,7 +95,10 @@ export class UsuariosaddComponent implements OnInit {
       this.id = this.Usuarios.usuarioID;
       this.Usuarios = { ...this.form.value };
       this.usuariosService.put(+this.id, this.Usuarios).subscribe(
-        () => this.toastr.success('Usuario salvo com sucesso'),
+        (usuarioRetorno: Usuario) => {
+          this.route.navigate([`usuarios/lista`]),
+          this.toastr.success('Usuario salvo com sucesso');
+        },
         (error: any) => {
           console.error(error);
           this.toastr.error('Erro ao salvar o usuario', 'Erro!'),

@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using LessaShoes.Domain;
 using LessaShoes.Application.Contratos;
 using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Linq;
 
 namespace LessaShoes.API.Controllers
 {
@@ -12,9 +15,12 @@ namespace LessaShoes.API.Controllers
     public class TenisController : ControllerBase
     {
         private readonly ITenisService _TenisService;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public TenisController(ITenisService tenisService)
+        public TenisController(ITenisService tenisService,
+         IWebHostEnvironment hostEnvironment)
         {
+            _hostEnvironment = hostEnvironment;
             _TenisService = tenisService;
         }
         [HttpGet]
@@ -67,6 +73,32 @@ namespace LessaShoes.API.Controllers
             }
         }
 
+        [HttpPost("upload/{tenisId}")]
+
+        public async Task<IActionResult> UploadImagem(int tenisId)
+        {
+            try
+            {
+                var tenis = await _TenisService.GetTenisByIDAsync(tenisId);
+                if (tenis == null) return NoContent();
+
+                var arquivo = Request.Form.Files[0];
+                if (arquivo.Length > 0)
+                {
+                    DeletarImagem(tenis.imagemURL);
+                    tenis.imagemURL = await SalvarImagem(arquivo);
+                }
+
+                var tenisRetorno = await _TenisService.UpdateTenis(tenisId, tenis);
+
+                return Ok(tenisRetorno);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddTenis(tenis model)
         {
@@ -105,15 +137,53 @@ namespace LessaShoes.API.Controllers
         {
             try
             {
-                return await _TenisService.Delete(id) ?
-                Ok(new {message = "Deletado"}) :
-                BadRequest("Tenis não deletado");
+                var tenis = await _TenisService.GetTenisByIDAsync(id);
+                if (tenis == null) return NoContent();
+
+                if (await _TenisService.Delete(id))
+                {
+                    DeletarImagem(tenis.imagemURL);
+                    return Ok(new { message = "Deletado" });
+                }
+                else
+                {
+                    throw new Exception("Ocorreu um erro ao deletar o tênis");
+                }
+
             }
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar atualizar o tenis. Erro{ex.Message}");
             }
+        }
+
+        [NonAction]
+        public async Task<string> SalvarImagem(IFormFile arquivoImagem)
+        {
+            string nomeImagem = new string(Path.GetFileNameWithoutExtension(arquivoImagem.FileName)
+            .Take(10)
+            .ToArray())
+            .Replace(' ', '-');
+
+            nomeImagem = $"{nomeImagem}{DateTime.UtcNow.ToString("yymmssfff")}{Path.GetExtension(arquivoImagem.FileName)}";
+
+            var caminhoImagem = Path.Combine(_hostEnvironment.ContentRootPath, @"Recursos/imagens", nomeImagem);
+
+            using (var arquivoStream = new FileStream(caminhoImagem, FileMode.Create))
+            {
+                await arquivoImagem.CopyToAsync(arquivoStream);
+            }
+
+            return nomeImagem;
+        }
+
+        [NonAction]
+        public void DeletarImagem(string nomeImagem)
+        {
+            var caminhoImagem = Path.Combine(_hostEnvironment.ContentRootPath, @"Recursos/imagens", nomeImagem);
+            if (System.IO.File.Exists(caminhoImagem))
+                System.IO.File.Delete(caminhoImagem);
         }
     }
 }

@@ -38,7 +38,9 @@ export class UsuarioService {
   }
 
   public delete(id: number): Observable<any> {
-    return this.http.delete(`${this.baseURL}/${id}`).pipe(take(1));
+    return this.http
+    .delete(`${this.baseURL}/${id}`)
+    .pipe(take(1));
   }
 
   public postUpload(usuarioId: number, arquivo: File[]): Observable<Usuario> {

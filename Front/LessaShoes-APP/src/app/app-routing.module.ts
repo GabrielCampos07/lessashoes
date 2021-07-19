@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent} from './components/paginainicial/paginainicial.component';
 
 import { TenisComponent } from './components/tenis/tenis.component';
 import { TenisaddComponent } from './components/tenis/tenisadd/tenisadd.component';
@@ -44,9 +44,9 @@ const routes: Routes = [
       { path: 'lista', component: TenislistaComponent },
     ],
   },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: 'paginainicial', component: DashboardComponent  },
+  { path: '', redirectTo: 'paginainicial', pathMatch: 'full' },
+  { path: '**', redirectTo: 'paginainicial', pathMatch: 'full' },
 ];
 
 @NgModule({

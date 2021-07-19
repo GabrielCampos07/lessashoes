@@ -1,5 +1,27 @@
 <form [formGroup]="form">
   <div class="form-row">
+    <div class="card-position" *ngIf="tenis.tenisID">
+      <div class="card">
+        <img
+          src="../../../../assets/logoLogin.jpg"
+          alt="Cover"
+          class="card-img-top"
+        />
+        <div class="card-body text-center">
+          <img
+            [src]="imagemURL"
+            style="width: 100px; margin-top: -65px"
+            alt="User"
+            class="img-fluid img-thumbnail rounded-circle border-0 mb-3"
+          />
+          <h5 class="card-title">#{{tenis.tenisID}}
+            <br>
+            {{ tenis.nomeTenis }}</h5>
+          <p class="text-secondary mb-1">{{ tenis.marca }}</p>
+          <p class="text-muted font-size-sm">Quantidade : {{ tenis.qtdTenis }}</p>
+        </div>
+      </div>
+    </div>
     <div class="form-group col-md-4">
       <label for="inputEmail4">Nome</label>
       <input
@@ -9,6 +31,7 @@
         formControlName="nomeTenis"
         placeholder="Nome do tênis"
         [ngClass]="{ 'is-invalid': fb.nomeTenis.errors && fb.nomeTenis.touched }"
+        [(ngModel)]="tenis.nomeTenis"
       />
       <div *ngIf="fb.nomeTenis.errors?.required" class="invalid-feedback">
         Nome é obrigatório
@@ -29,6 +52,7 @@
         placeholder="Marca do tênis"
         formControlName="marca"
         [ngClass]="{ 'is-invalid': fb.marca.errors && fb.marca.touched }"
+        [(ngModel)]="tenis.marca"
       />
     </div>
     <div class="form-group col-md-4">
@@ -40,6 +64,7 @@
         placeholder="Tamanho do tênis"
         formControlName="tamanho"
         [ngClass]="{ 'is-invalid': fb.tamanho.errors && fb.tamanho.touched }"
+        [(ngModel)]="tenis.tamanho"
       />
     </div>
   </div>
@@ -54,6 +79,7 @@
       [ngClass]="{
         'is-invalid': fb.qtdTenis.errors && fb.qtdTenis.touched
       }"
+      [(ngModel)]="tenis.qtdTenis"
     />
     <div *ngIf="fb.qtdTenis.errors?.required" class="invalid-feedback">
       Quantidade é obrigatória
@@ -62,19 +88,20 @@
       Minimo de 1 caracter é obrigatório
     </div>
   </div>
-  <div class="form-group col-md-4">
+  <div class="form-group col-md-4" *ngIf="tenis.tenisID">
     <label for="inputAddress">imagem</label>
     <input
-      type="text"
-      class="form-control"
-      id="inputAddress"
-      placeholder="Imagem"
-      formControlName="imagemURL"
-    />
+    type="file"
+    class="form-control-file"
+    id="exampleFormControlFile1"
+    #file
+    (change)="mudarImagem($event)"
+  />
   </div>
   <hr />
   <div class="justify-content-around">
     <button
+    *ngIf="tenis.tenisID"
       type="submit"
       class="btn"
       style="background: red; color: white; margin-right: 5px"
