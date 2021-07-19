@@ -2,7 +2,7 @@ import { AppComponent } from './app.component';
 
 import { CabecalhoComponent } from './Shared/cabecalho/cabecalho.component';
 
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './components/paginainicial/paginainicial.component';
 
 import { NavComponent } from './Shared/nav/nav.component';
 
