@@ -4,7 +4,7 @@
 
 ## Utilizados:
 1. C# (ASP.Net Core)
-2. Angular(Typescript, Javascript, HTML e CSS)
+2. Angular(Typescript, Javascript, HTML e SCSS)
 3. SQLite
 
 ### Work In Progress
