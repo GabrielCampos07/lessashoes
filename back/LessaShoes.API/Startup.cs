@@ -1,12 +1,16 @@
 using System.IO;
 using LessaShoes.Application;
 using LessaShoes.Application.Contratos;
+using LessaShoes.Domain.Identity;
 using LessaShoes.Persistance;
 using LessaShoes.Persistance.Contratados;
 using LessaShoes.Persistance.Contratos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,9 +39,30 @@ namespace LessaShoes.API
 
             services.AddControllers();
 
-            services.AddScoped<IUsuarioService, UsuarioService>();
+            IdentityBuilder builder = services.AddIdentityCore<Usuario>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+            });
+
+            builder = new IdentityBuilder(builder.UserType, typeof(Cargo), builder.Services);
+            builder.AddEntityFrameworkStores<LessaShoesContext>();
+            builder.AddRoleValidator<RoleValidator<Cargo>>();
+            builder.AddRoleManager<RoleManager<Cargo>>();
+            builder.AddSignInManager<SignInManager<Usuario>>();
+
+            services.AddMvc(opcoes =>
+            {
+                var politica = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                opcoes.Filters.Add(new AuthorizeFilter(politica));
+            });
+
             services.AddScoped<IGeralPersist, GeralPersist>();
-            services.AddScoped<IUsuarioPersist, UsuarioPersist>();
             services.AddScoped<ITenisPersist, TenisPersist>();
             services.AddScoped<ITenisService, TenisService>();
 
