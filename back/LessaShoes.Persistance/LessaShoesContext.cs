@@ -11,7 +11,7 @@ namespace LessaShoes.Persistance
         IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public LessaShoesContext(DbContextOptions<LessaShoesContext> options) : base(options) { }
-        public DbSet<tenis> Tenis { get; set; }
+        public DbSet<Tenis> Tenis { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

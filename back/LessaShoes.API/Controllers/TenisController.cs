@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using LessaShoes.Domain;
 using LessaShoes.Application.Contratos;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Linq;
+using LessaShoes.Application.Dtos;
 
 namespace LessaShoes.API.Controllers
 {
@@ -29,7 +29,7 @@ namespace LessaShoes.API.Controllers
             try
             {
                 var tenis = await _TenisService.GetAllTenisAsync();
-                if (tenis == null) return NotFound("Nenhum Tenis encontrado.");
+                if (tenis == null) return NoContent();
 
                 return Ok(tenis);
             }
@@ -46,7 +46,7 @@ namespace LessaShoes.API.Controllers
             try
             {
                 var tenis = await _TenisService.GetTenisByIDAsync(id);
-                if (tenis == null) return NotFound("Nenhum Tenis com esse id foi encontrado.");
+                if (tenis == null) return NoContent();
 
                 return Ok(tenis);
             }
@@ -62,7 +62,7 @@ namespace LessaShoes.API.Controllers
             try
             {
                 var tenis = await _TenisService.GetAllTenisByNameAsync(nome);
-                if (tenis == null) return NotFound("Nenhum Tenis com esse id foi encontrado.");
+                if (tenis == null) return NoContent();
 
                 return Ok(tenis);
             }
@@ -85,8 +85,8 @@ namespace LessaShoes.API.Controllers
                 var arquivo = Request.Form.Files[0];
                 if (arquivo.Length > 0)
                 {
-                    DeletarImagem(tenis.imagemURL);
-                    tenis.imagemURL = await SalvarImagem(arquivo);
+                    DeletarImagem(tenis.ImagemURL);
+                    tenis.ImagemURL = await SalvarImagem(arquivo);
                 }
 
                 var tenisRetorno = await _TenisService.UpdateTenis(tenisId, tenis);
@@ -100,12 +100,12 @@ namespace LessaShoes.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTenis(tenis model)
+        public async Task<IActionResult> AddTenis(TenisDto model)
         {
             try
             {
                 var tenis = await _TenisService.AddTenis(model);
-                if (tenis == null) return NotFound("Não foi possível adicionar um tenis");
+                if (tenis == null) return NoContent();
 
                 return Ok(tenis);
             }
@@ -117,12 +117,12 @@ namespace LessaShoes.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, tenis model)
+        public async Task<IActionResult> Put(int id, TenisDto model)
         {
             try
             {
                 var tenis = await _TenisService.UpdateTenis(id, model);
-                if (tenis == null) return NotFound("Não foi possível atualizar o tenis.");
+                if (tenis == null) return NoContent();
 
                 return Ok(tenis);
             }
@@ -142,7 +142,7 @@ namespace LessaShoes.API.Controllers
 
                 if (await _TenisService.Delete(id))
                 {
-                    DeletarImagem(tenis.imagemURL);
+                    DeletarImagem(tenis.ImagemURL);
                     return Ok(new { message = "Deletado" });
                 }
                 else

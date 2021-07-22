@@ -1,12 +1,17 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace LessaShoes.Domain
 {
-    public class tenis
+    public class Tenis
     {
-        public int tenisID { get; set; }
-        public string imagemURL { get; set; }
-        public string nomeTenis { get; set; }
-        public int tamanho { get; set; }
-        public int qtdTenis { get; set; }
+        public int TenisID { get; set; }
+        public string ImagemURL { get; set; }
+        [Required]
+        public string NomeTenis { get; set; }
+        [Required]
+        public int Tamanho { get; set; }
+        [Required]
+        public int QtdTenis { get; set; }
         public string Marca {get; set;}
     }
 }

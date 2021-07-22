@@ -5,8 +5,8 @@ namespace LessaShoes.Persistance.Contratos
 {
     public interface ITenisPersist
     {
-        Task<tenis[]> GetAllTenisAsync();
-        Task<tenis> GetTenisByIDAsync(int tenisID);
-        Task<tenis[]> GetAllTenisByNameAsync(string nome);
+        Task<Tenis[]> GetAllTenisAsync();
+        Task<Tenis> GetTenisByIDAsync(int tenisID);
+        Task<Tenis[]> GetAllTenisByNameAsync(string nome);
     }
 }

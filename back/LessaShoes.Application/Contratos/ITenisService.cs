@@ -1,15 +1,15 @@
 using System.Threading.Tasks;
-using LessaShoes.Domain;
+using LessaShoes.Application.Dtos;
 
 namespace LessaShoes.Application.Contratos
 {
     public interface ITenisService
     {
-        Task<tenis> AddTenis(tenis model);
-        Task<tenis> UpdateTenis(int tenisID, tenis model);
+        Task<TenisDto> AddTenis(TenisDto model);
+        Task<TenisDto> UpdateTenis(int tenisID, TenisDto model);
         Task<bool> Delete(int tenisID);
-        Task<tenis[]> GetAllTenisAsync();
-        Task<tenis> GetTenisByIDAsync(int tenisID);
-        Task<tenis[]> GetAllTenisByNameAsync(string nome);
+        Task<TenisDto[]> GetAllTenisAsync();
+        Task<TenisDto> GetTenisByIDAsync(int tenisID);
+        Task<TenisDto[]> GetAllTenisByNameAsync(string nome);
     }
 }
