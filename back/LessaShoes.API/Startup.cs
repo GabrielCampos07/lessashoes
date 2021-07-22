@@ -104,6 +104,8 @@ namespace LessaShoes.API
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
+
             app.UseRouting();
 
             app.UseAuthorization();
