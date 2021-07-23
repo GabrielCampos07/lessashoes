@@ -18,4 +18,8 @@ export class NavComponent implements OnInit {
   ngOnInit() {
   }
 
+  logado()
+  {
+    return true;
+  }
 }

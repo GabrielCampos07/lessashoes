@@ -35,10 +35,10 @@
                     class="form-control"
                     placeholder="Nome completo *"
                     value=""
-                    formControlName="nomeCompleto"
-                    [ngClass]="cssValidador(fb.nomeCompleto)"
+                    formControlName="NomeCompleto"
+                    [ngClass]="cssValidador(fb.NomeCompleto)"
                   />
-                  <div *ngIf="fb.nomeCompleto.errors?.required" class="invalid-feedback">
+                  <div *ngIf="fb.NomeCompleto.errors?.required" class="invalid-feedback">
                     Nome é obrigatório
                   </div>
                 </div>
@@ -48,11 +48,11 @@
                     class="form-control"
                     placeholder="Nome de usuário *"
                     value=""
-                    formControlName="nomeUsuario"
-                    [ngClass]="cssValidador(fb.nomeUsuario)"
+                    formControlName="UserName"
+                    [ngClass]="cssValidador(fb.UserName)"
                   />
-                  <div *ngIf="fb.nomeUsuario.errors?.required" class="invalid-feedback">
-                    Ultimo nome é obrigatório
+                  <div *ngIf="fb.UserName.errors?.required" class="invalid-feedback">
+                    Nome de usuário é obrigatório
                   </div>
                 </div>
                 <div class="form-group">
@@ -61,12 +61,12 @@
                     class="form-control"
                     placeholder="Senha *"
                     value=""
-                    formControlName="senha"
-                    [ngClass]="cssValidador(fb.senha)"
+                    formControlName="Password"
+                    [ngClass]="cssValidador(fb.Password)"
                   />
-                  <div *ngIf="fb.senha.errors?.required" class="invalid-feedback">
+                  <div *ngIf="fb.Password.errors?.required" class="invalid-feedback">
                     Senha é obrigatória.
-                  </div><div *ngIf="fb.senha.errors?.minlength" class="invalid-feedback">
+                  </div><div *ngIf="fb.Password.errors?.minlength" class="invalid-feedback">
                     Senha deve ter no minimo 8 caracteres.
                   </div>
                 </div>
@@ -76,13 +76,13 @@
                     class="form-control"
                     placeholder="Confirmar senha *"
                     value=""
-                    formControlName="confirmarSenha"
-                    [ngClass]="cssValidador(fb.confirmarSenha)"
+                    formControlName="ConfirmPassword"
+                    [ngClass]="cssValidador(fb.ConfirmPassword)"
                   />
-                  <div *ngIf="fb.confirmarSenha.errors?.required" class="invalid-feedback">
+                  <div *ngIf="fb.ConfirmPassword.errors?.required" class="invalid-feedback">
                     Confirme sua senha
                   </div>
-                  <div *ngIf="fb.confirmarSenha.errors?.mustMatch" class="invalid-feedback">
+                  <div *ngIf="fb.ConfirmPassword.errors?.mustMatch" class="invalid-feedback">
                     Senhas devem conferir
                   </div>
                 </div>
@@ -94,41 +94,20 @@
                     class="form-control"
                     placeholder="Seu e-mail *"
                     value=""
-                    formControlName="email"
-                    [ngClass]="cssValidador(fb.email)"
+                    formControlName="Email"
+                    [ngClass]="cssValidador(fb.Email)"
                   />
-                  <div *ngIf="fb.email.errors?.required" class="invalid-feedback">
+                  <div *ngIf="fb.Email.errors?.required" class="invalid-feedback">
                     E-mail é obrigatório
                   </div>
-                  <div *ngIf="fb.email.errors?.email" class="invalid-feedback">
+                  <div *ngIf="fb.Email.errors?.Email" class="invalid-feedback">
                     Digite um e-mail válido
                   </div>
                 </div>
-                <div class="form-group">
-                  <input
-                    type="text"
-                    name="txtEmpPhone"
-                    class="form-control"
-                    placeholder="Seu telefone"
-                    value=""
-                    formControlName="contato"
-                    [ngClass]="cssValidador(fb.contato)"
-                  />
-                </div>
-                <div *ngIf="fb.contato.errors?.maxlength" class="invalid-feedback">
+                <div *ngIf="fb.Email.errors?.maxlength" class="invalid-feedback">
                   Digite um e-mail válido
                 </div>
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="seu cargo"
-                    value=""
-                    formControlName="cargo"
-                    [ngClass]="cssValidador(fb.cargo)"
-                  />
-                </div>
-              <input type="submit" class="btnRegister" value="Registrar" (click)="salvarUsuario()">
+              <input type="submit" class="btnRegister" value="Registrar" (click)="cadastrarUsuario()">
               </div>
             </div>
           </form>
