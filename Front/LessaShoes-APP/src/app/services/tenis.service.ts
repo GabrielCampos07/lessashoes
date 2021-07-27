@@ -28,7 +28,7 @@ export class tenis {
 
   public getTenisById(id: number) : Observable<Tenis>
   {
-    return this.http.get<Tenis>(`${this.BaseURL}/${id}`);
+    return this.http.get<Tenis>(`${this.BaseURL}/${id}`, {headers: this.tokenHeader});
   }
 
   public post(tenis: Tenis) : Observable<Tenis>
@@ -41,14 +41,14 @@ export class tenis {
   public put(id: number, tenis: Tenis) : Observable<Tenis>
   {
     return this.http
-    .put<Tenis>(`${this.BaseURL}/${id}`, tenis)
+    .put<Tenis>(`${this.BaseURL}/${id}`, tenis, {headers: this.tokenHeader})
     .pipe(take(1));
   }
 
   public delete(id: number) : Observable<any>
   {
     return this.http
-    .delete(`${this.BaseURL}/${id}`)
+    .delete(`${this.BaseURL}/${id}`, {headers: this.tokenHeader})
     .pipe(take(1));
   }
 
