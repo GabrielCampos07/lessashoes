@@ -10,10 +10,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { CamposValidacao } from 'src/app/Helpers/CamposValidacao';
 import { ToastrService } from 'ngx-toastr';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { Usuario } from 'src/app/Models/Usuario';
+import { AutenticacaoService } from 'src/app/services/autenticacao.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService, Spinner } from 'ngx-spinner';
+import { Element } from '@angular/compiler';
+import { elementAt } from 'rxjs/operators';
+import { error } from '@angular/compiler/src/util';
+import { NgElement } from '@angular/elements';
 
 @Component({
   selector: 'app-registrar',
@@ -24,9 +28,9 @@ export class RegistrarComponent implements OnInit {
   constructor(
     private formB: FormBuilder,
     private toastr: ToastrService,
-    private modalService: BsModalService,
-    private spinner: NgxSpinnerService,
-    private router: Router
+    private authService: AutenticacaoService,
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -41,13 +45,25 @@ export class RegistrarComponent implements OnInit {
     return this.form.controls;
   }
 
-  public cadastrarUsuario()
-  {
-    if(this.form.valid)
-    {
-      this.usuario = Object.assign({Password: this.form.get('password.password')?.value},
-      this.form.value);
-      console.log(this.usuario)
+  public cadastrarUsuario() {
+    if (this.form.valid) {
+      this.usuario = Object.assign(
+        { Password: this.form.get('password.password')?.value },
+        this.form.value
+      );
+      this.authService
+        .registrar(this.usuario)
+        .subscribe(
+          () => {
+            this.spinner.show();
+            this.router.navigate(['/user/login']);
+            this.toastr.success('Cadastro realizado com sucesso', 'sucesso');
+          },
+          (error: any) => {
+            this.toastr.error('Erro ao criar o usuário', 'Erro');
+          }
+        )
+        .add(() => this.spinner.hide());
     }
   }
 

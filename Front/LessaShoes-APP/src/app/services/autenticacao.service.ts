@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AutenticacaoService {
 
-  BaseURL = environment.apiURL + 'api/usuario';
+  BaseURL = environment.apiURL + 'api/usuario/';
   ajudaJwt = new JwtHelperService();
   tokenDeco: any;
 
@@ -17,7 +17,7 @@ export class AutenticacaoService {
 
   login(model: any)
   {
-    return this.http.post(`${this.BaseURL}login`, model).pipe(
+    return this.http.post(`${this.BaseURL}Login`, model).pipe(
       map((Response: any) =>
       {
         const usuario = Response;
@@ -31,15 +31,8 @@ export class AutenticacaoService {
     )
   }
 
-  register(model: any)
+  registrar(model: any)
   {
-    return this.http.post(`${this.BaseURL}login`, model);
-  }
-
-  logado()
-  {
-    const token = JSON.parse(localStorage.getItem('token')!);
-
-    return this.ajudaJwt.isTokenExpired(token);
+    return this.http.post(`${this.BaseURL}Registrar`, model);
   }
 }

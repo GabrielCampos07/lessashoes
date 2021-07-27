@@ -1,35 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AutenticacaoService } from 'src/app/services/autenticacao.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private formB: FormBuilder) { }
+  titulo = 'Login';
+  model: any = {};
 
-  ngOnInit(): void {
-    this.validacao();
+  constructor(private authService: AutenticacaoService
+    , public router: Router
+    , private toastr: ToastrService) { }
+
+  ngOnInit() {
+    if (localStorage.getItem('token') != null) {
+      this.router.navigate(['/paginainicial']);
+    }
   }
 
-  form = {} as FormGroup;
-
-  get fb(){
-    return this.form.controls;
+  login() {
+    this.authService.login(this.model)
+      .subscribe(
+        () => {
+          this.router.navigate(['/paginainicial']);
+          this.toastr.success('Logado com Sucesso');
+        },
+        () => {
+          this.toastr.error('Falha ao tentar Logar');
+        }
+      );
   }
 
-
-  public cssValidador(campo: FormControl): any {
-    return {'is-invalid': campo.errors && campo.touched};
-  }
-
-  public validacao(){
-    this.form = this.formB.group({
-    usuario: ['', [Validators.required]],
-    senha: ['',[Validators.required]]
-    })
-  }
 }

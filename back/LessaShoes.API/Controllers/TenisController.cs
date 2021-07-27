@@ -7,6 +7,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Linq;
 using LessaShoes.Application.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LessaShoes.API.Controllers
 {

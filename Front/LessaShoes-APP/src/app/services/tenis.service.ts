@@ -1,5 +1,5 @@
 import { Tenis } from './../Models/Tenis'
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -9,13 +9,16 @@ import { environment } from 'src/environments/environment';
 
 export class tenis {
   BaseURL = environment.apiURL + 'api/tenis';
+  tokenHeader = { } as HttpHeaders;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.tokenHeader = new HttpHeaders({'Authorization': `Bearer ${localStorage.getItem('token')}`});
+  }
 
 
   public getTenis() : Observable<Tenis[]>
   {
-    return this.http.get<Tenis[]>(this.BaseURL);
+    return this.http.get<Tenis[]>(this.BaseURL, {headers: this.tokenHeader});
   }
 
   public getTenisByNome(nome: string) : Observable<Tenis[]>
@@ -31,7 +34,7 @@ export class tenis {
   public post(tenis: Tenis) : Observable<Tenis>
   {
     return this.http
-    .post<Tenis>(this.BaseURL, tenis)
+    .post<Tenis>(this.BaseURL, tenis, {headers: this.tokenHeader})
     .pipe(take(1));
   }
 
@@ -56,7 +59,7 @@ export class tenis {
     formData.append('arquivo', arquivoUpload);
 
     return this.http
-      .post<Tenis>(`${this.BaseURL}/upload/${tenisId}`, formData)
+      .post<Tenis>(`${this.BaseURL}/upload/${tenisId}`, formData, {headers: this.tokenHeader})
       .pipe(take(1));
   }
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
 
 import { DashboardComponent} from './components/paginainicial/paginainicial.component';
 
@@ -25,12 +26,12 @@ const routes: Routes = [
     path: 'tenis',
     component: TenisComponent,
     children: [
-      { path: 'detalhe/:id', component: TenisaddComponent },
-      { path: 'detalhe', component: TenisaddComponent },
-      { path: 'lista', component: TenislistaComponent },
+      { path: 'detalhe/:id', component: TenisaddComponent, canActivate: [AuthGuard] },
+      { path: 'detalhe', component: TenisaddComponent, canActivate: [AuthGuard] },
+      { path: 'lista', component: TenislistaComponent, canActivate: [AuthGuard] },
     ],
   },
-  { path: 'paginainicial', component: DashboardComponent  },
+  { path: 'paginainicial', component: DashboardComponent, canActivate: [AuthGuard]  },
   { path: '', redirectTo: 'paginainicial', pathMatch: 'full' },
   { path: '**', redirectTo: 'paginainicial', pathMatch: 'full' },
 ];
