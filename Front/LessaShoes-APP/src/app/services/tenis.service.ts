@@ -9,16 +9,14 @@ import { environment } from 'src/environments/environment';
 
 export class tenis {
   BaseURL = environment.apiURL + 'api/tenis';
-  tokenHeader = { } as HttpHeaders;
 
   constructor(private http: HttpClient) {
-    this.tokenHeader = new HttpHeaders({'Authorization': `Bearer ${localStorage.getItem('token')}`});
   }
 
 
   public getTenis() : Observable<Tenis[]>
   {
-    return this.http.get<Tenis[]>(this.BaseURL, {headers: this.tokenHeader});
+    return this.http.get<Tenis[]>(this.BaseURL);
   }
 
   public getTenisByNome(nome: string) : Observable<Tenis[]>
@@ -28,27 +26,27 @@ export class tenis {
 
   public getTenisById(id: number) : Observable<Tenis>
   {
-    return this.http.get<Tenis>(`${this.BaseURL}/${id}`, {headers: this.tokenHeader});
+    return this.http.get<Tenis>(`${this.BaseURL}/${id}`);
   }
 
   public post(tenis: Tenis) : Observable<Tenis>
   {
     return this.http
-    .post<Tenis>(this.BaseURL, tenis, {headers: this.tokenHeader})
+    .post<Tenis>(this.BaseURL, tenis)
     .pipe(take(1));
   }
 
   public put(id: number, tenis: Tenis) : Observable<Tenis>
   {
     return this.http
-    .put<Tenis>(`${this.BaseURL}/${id}`, tenis, {headers: this.tokenHeader})
+    .put<Tenis>(`${this.BaseURL}/${id}`, tenis)
     .pipe(take(1));
   }
 
   public delete(id: number) : Observable<any>
   {
     return this.http
-    .delete(`${this.BaseURL}/${id}`, {headers: this.tokenHeader})
+    .delete(`${this.BaseURL}/${id}`)
     .pipe(take(1));
   }
 
@@ -59,7 +57,7 @@ export class tenis {
     formData.append('arquivo', arquivoUpload);
 
     return this.http
-      .post<Tenis>(`${this.BaseURL}/upload/${tenisId}`, formData, {headers: this.tokenHeader})
+      .post<Tenis>(`${this.BaseURL}/upload/${tenisId}`, formData)
       .pipe(take(1));
   }
 }

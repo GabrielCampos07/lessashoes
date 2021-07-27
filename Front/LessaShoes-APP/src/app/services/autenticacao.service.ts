@@ -25,7 +25,7 @@ export class AutenticacaoService {
         {
           localStorage.setItem('token', usuario.token);
           this.tokenDeco = this.ajudaJwt.decodeToken(usuario.token);
-
+          sessionStorage.setItem('username', this.tokenDeco.unique_name);
         }
       })
     )

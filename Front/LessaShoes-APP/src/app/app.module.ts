@@ -24,9 +24,8 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -36,7 +35,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { tenis } from './services/tenis.service';
-
+import { AuthInterceptador } from './auth/auth.interceptador';
 
 @NgModule({
   declarations: [
@@ -72,7 +71,12 @@ import { tenis } from './services/tenis.service';
       progressBar: true,
     }),
   ],
-  providers: [tenis],
+  providers: [tenis,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptador,
+    multi: true
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
