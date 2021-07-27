@@ -10,11 +10,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { CamposValidacao } from 'src/app/Helpers/CamposValidacao';
 import { ToastrService } from 'ngx-toastr';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/Models/Usuario';
+import { AutenticacaoService } from 'src/app/services/autenticacao.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService, Spinner } from 'ngx-spinner';
+import { Element } from '@angular/compiler';
+import { elementAt } from 'rxjs/operators';
+import { error } from '@angular/compiler/src/util';
+import { NgElement } from '@angular/elements';
 
 @Component({
   selector: 'app-registrar',
@@ -25,10 +28,9 @@ export class RegistrarComponent implements OnInit {
   constructor(
     private formB: FormBuilder,
     private toastr: ToastrService,
-    private modalService: BsModalService,
-    private spinner: NgxSpinnerService,
-    private usuarioService: UsuarioService,
-    private router: Router
+    private authService: AutenticacaoService,
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -43,48 +45,44 @@ export class RegistrarComponent implements OnInit {
     return this.form.controls;
   }
 
-  public cssValidador(campo: FormControl): any {
-    return { 'is-invalid': campo.errors && campo.touched };
-  }
-
-  public salvarUsuario() {
+  public cadastrarUsuario() {
     if (this.form.valid) {
-      this.usuario = { ...this.form.value };
-      if (this.usuario.imagemURL == null) {
-        this.usuario.imagemURL = this.imagem;
-      }
-      this.usuarioService
-        .post(this.usuario)
+      this.usuario = Object.assign(
+        { Password: this.form.get('password.password')?.value },
+        this.form.value
+      );
+      this.authService
+        .registrar(this.usuario)
         .subscribe(
-          (usuarioRetorno: Usuario) => {
-            this.toastr.success('Usuário salvo com sucesso', 'Sucesso!'),
-              this.router.navigate([
-                `usuarios/detalhe/${usuarioRetorno.usuarioID}`,
-              ]);
+          () => {
+            this.spinner.show();
+            this.router.navigate(['/user/login']);
+            this.toastr.success('Cadastro realizado com sucesso', 'sucesso');
           },
           (error: any) => {
-            this.toastr.error('Erro ao salvar o usuário', 'Erro!'),
-              console.error(error);
+            this.toastr.error('Erro ao criar o usuário', 'Erro');
           }
         )
         .add(() => this.spinner.hide());
     }
   }
 
+  public cssValidador(campo: FormControl): any {
+    return { 'is-invalid': campo?.errors && campo?.touched };
+  }
+
   public validacao(): void {
     const formOptions: AbstractControlOptions = {
-      validators: CamposValidacao.ConfirmarCampo('senha', 'confirmarSenha'),
+      validators: CamposValidacao.ConfirmarCampo('Password', 'ConfirmPassword'),
     };
 
     this.form = this.formB.group(
       {
-        nomeCompleto: ['', [Validators.required]],
-        nomeUsuario: ['', [Validators.required]],
-        email: ['', [Validators.required, Validators.email]],
-        senha: ['', [Validators.required, Validators.minLength(8)]],
-        confirmarSenha: ['', [Validators.required, Validators.minLength(8)]],
-        cargo: ['', [Validators.required]],
-        contato: ['', [Validators.required, Validators.maxLength(15)]],
+        NomeCompleto: ['', [Validators.required]],
+        UserName: ['', [Validators.required]],
+        Email: ['', [Validators.required, Validators.email]],
+        Password: ['', [Validators.required, Validators.minLength(8)]],
+        ConfirmPassword: ['', [Validators.required, Validators.minLength(8)]],
       },
       formOptions
     );

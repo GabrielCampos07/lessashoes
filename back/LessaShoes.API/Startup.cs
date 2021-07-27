@@ -1,18 +1,27 @@
 using System.IO;
+using System.Text;
 using LessaShoes.Application;
 using LessaShoes.Application.Contratos;
+using LessaShoes.Domain.Identity;
 using LessaShoes.Persistance;
 using LessaShoes.Persistance.Contratados;
 using LessaShoes.Persistance.Contratos;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
+using System;
 
 namespace LessaShoes.API
 {
@@ -33,11 +42,47 @@ namespace LessaShoes.API
                 x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
             );
 
-            services.AddControllers();
+            IdentityBuilder builder = services.AddIdentityCore<Usuario>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+            });
 
-            services.AddScoped<IUsuarioService, UsuarioService>();
+            builder = new IdentityBuilder(builder.UserType, typeof(Cargo), builder.Services);
+            builder.AddEntityFrameworkStores<LessaShoesContext>();
+            builder.AddRoleValidator<RoleValidator<Cargo>>();
+            builder.AddRoleManager<RoleManager<Cargo>>();
+            builder.AddSignInManager<SignInManager<Usuario>>();
+
+            services.AddControllers(opcoes =>
+            {
+                var politica = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                opcoes.Filters
+                .Add(new AuthorizeFilter(politica));
+            }).AddNewtonsoftJson(opc => opc.SerializerSettings.ReferenceLoopHandling =
+            Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opcoes =>
+                {
+                    opcoes.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                        .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<IGeralPersist, GeralPersist>();
-            services.AddScoped<IUsuarioPersist, UsuarioPersist>();
             services.AddScoped<ITenisPersist, TenisPersist>();
             services.AddScoped<ITenisService, TenisService>();
 
@@ -58,6 +103,8 @@ namespace LessaShoes.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseRouting();
 

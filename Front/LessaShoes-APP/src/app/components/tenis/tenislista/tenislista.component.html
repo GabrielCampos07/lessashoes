@@ -1,4 +1,4 @@
-<div class="container" *ngIf="tenis && tenis.length">
+<div class="container">
   <div class="input-group mb-3">
     <div class="form-group mx-sm-3 mb-2">
       <label for="inputPassword2" class="sr-only">Buscar</label>
@@ -22,14 +22,11 @@
   </div>
   <div>
     <a
-      class="btn"
+      class="btn d-flex"
       routerLink="/tenis/detalhe"
       style="
         width: 10%;
         color: black;
-        position: relative;
-        left: 150vh;
-        bottom: 10vh;
       "
     >
       <i class="fa fa-plus-circle my-1"></i>

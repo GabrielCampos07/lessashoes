@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using LessaShoes.Application.Contratos;
+using LessaShoes.Application.Dtos;
 using LessaShoes.Domain;
 using LessaShoes.Persistance.Contratos;
 
@@ -10,20 +12,28 @@ namespace LessaShoes.Application
     {
         private IGeralPersist _GeralPersist;
         private readonly ITenisPersist _TenisPersist;
+        private readonly IMapper _mapper;
 
-        public TenisService(IGeralPersist GeralPersist, ITenisPersist TenisPersist)
+        public TenisService(IGeralPersist GeralPersist, 
+                            ITenisPersist TenisPersist,
+                            IMapper mapper)
         {
             _GeralPersist = GeralPersist;
             _TenisPersist = TenisPersist;
+            _mapper = mapper;
         }
-        public async Task<tenis> AddTenis(tenis model)
+        public async Task<TenisDto> AddTenis(TenisDto model)
         {
             try
             {
-                _GeralPersist.add<tenis>(model);
+                var tenis = _mapper.Map<Tenis>(model);
+
+                _GeralPersist.add<Tenis>(tenis);
                 if (await _GeralPersist.SaveChangesAsync())
                 {
-                    return await _TenisPersist.GetTenisByIDAsync(model.tenisID);
+                    var tenisRetorno = await _TenisPersist.GetTenisByIDAsync(tenis.TenisID);
+
+                    return _mapper.Map<TenisDto>(tenisRetorno);
                 }
                 return null;
             }
@@ -32,19 +42,24 @@ namespace LessaShoes.Application
                 throw new Exception(ex.Message);
             }
         }
-        public async Task<tenis> UpdateTenis(int tenisID, tenis model)
+        public async Task<TenisDto> UpdateTenis(int tenisID, TenisDto model)
         {
             try
             {
                 var tenis = await _TenisPersist.GetTenisByIDAsync(tenisID);
                 if (tenis == null) throw new Exception("O ID para atualização não foi encontrado");
 
-                model.tenisID = tenisID;
+                model.TenisID = tenisID;
 
-                _GeralPersist.Update(model);
+                _mapper.Map(model, tenis);
+
+                _GeralPersist.Update<Tenis>(tenis);
+
                 if (await _GeralPersist.SaveChangesAsync())
                 {
-                    return await _TenisPersist.GetTenisByIDAsync(model.tenisID);
+                    var tenisRetorno = await _TenisPersist.GetTenisByIDAsync(tenis.TenisID);
+
+                    return _mapper.Map<TenisDto>(tenisRetorno);
                 }
                 return null;
             }
@@ -54,14 +69,16 @@ namespace LessaShoes.Application
             }
         }
 
-        public async Task<tenis[]> GetAllTenisAsync()
+        public async Task<TenisDto[]> GetAllTenisAsync()
         {
             try
             {
                 var tenis = await _TenisPersist.GetAllTenisAsync();
                 if (tenis == null) return null;
 
-                return tenis;
+                var resultado = _mapper.Map<TenisDto[]>(tenis);
+
+                return resultado;
             }
             catch (Exception ex)
             {
@@ -69,22 +86,26 @@ namespace LessaShoes.Application
             }
         }
 
-        public async Task<tenis[]> GetAllTenisByNameAsync(string nome)
+        public async Task<TenisDto[]> GetAllTenisByNameAsync(string nome)
         {
             var tenis = await _TenisPersist.GetAllTenisByNameAsync(nome);
             if (tenis == null) return null;
 
-            return tenis;
+            var resultado = _mapper.Map<TenisDto[]>(tenis);
+
+            return resultado;
         }
 
-        public async Task<tenis> GetTenisByIDAsync(int tenisID)
+        public async Task<TenisDto> GetTenisByIDAsync(int tenisID)
         {
             try
             {
                 var tenis = await _TenisPersist.GetTenisByIDAsync(tenisID);
                 if (tenis == null) return null;
 
-                return tenis;
+                var resultado = _mapper.Map<TenisDto>(tenis);
+
+                return resultado;
             }
             catch (Exception ex)
             {

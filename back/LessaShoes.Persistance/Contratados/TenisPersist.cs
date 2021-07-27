@@ -14,31 +14,31 @@ namespace LessaShoes.Persistance.Contratados
             _context = context;
 
         }
-        public async Task<tenis[]> GetAllTenisAsync()
+        public async Task<Tenis[]> GetAllTenisAsync()
         {
-            IQueryable<tenis> query = _context.Tenis;
+            IQueryable<Tenis> query = _context.Tenis;
             
-            query = query.AsNoTracking().OrderBy(e => e.tenisID);
+            query = query.AsNoTracking().OrderBy(e => e.TenisID);
 
             return await query.ToArrayAsync();
         }
 
-        public async Task<tenis[]> GetAllTenisByNameAsync(string nome)
+        public async Task<Tenis[]> GetAllTenisByNameAsync(string nome)
         {
-            IQueryable<tenis> query = _context.Tenis;
+            IQueryable<Tenis> query = _context.Tenis;
 
-            query = query.AsNoTracking().OrderBy(e => e.nomeTenis)
-            .Where(e => e.nomeTenis.ToLower().Contains(nome.ToLower()));
+            query = query.AsNoTracking().OrderBy(e => e.NomeTenis)
+            .Where(e => e.NomeTenis.ToLower().Contains(nome.ToLower()));
 
             return await query.ToArrayAsync();
         }
 
-        public async Task<tenis> GetTenisByIDAsync(int tenisID)
+        public async Task<Tenis> GetTenisByIDAsync(int tenisID)
         {
-            IQueryable<tenis> query = _context.Tenis;
+            IQueryable<Tenis> query = _context.Tenis;
 
-            query = query.AsNoTracking().OrderBy(e => e.tenisID)
-                .Where(e => e.tenisID == tenisID);
+            query = query.AsNoTracking().OrderBy(e => e.TenisID)
+                .Where(e => e.TenisID == tenisID);
 
             return await query.FirstOrDefaultAsync();
         }
