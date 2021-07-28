@@ -8,4 +8,4 @@
 3. SQLite
 
 ### Exemplar:
-<img src="https://github.com/GabrielCampos07/justthings/blob/main/readlessashoesgif.gif" width="400" height="450" />
+<img src="https://github.com/GabrielCampos07/justthings/blob/main/readlessashoesgif.gif" width="600" height="450" />
