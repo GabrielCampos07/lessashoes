@@ -1,6 +1,6 @@
 <img src="https://github.com/GabrielCampos07/scientificcalculator/blob/93a04ead56de916b71948775b3359d3fba779ad8/readmeimg/logocampos.png" width="60" height="65" />
 
-# Lessa Shoes
+# LessaShoes
 
 ## Utilizados:
 1. C# (ASP.Net Core)
