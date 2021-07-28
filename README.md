@@ -7,4 +7,5 @@
 2. Angular(Typescript, Javascript, HTML e SCSS)
 3. SQLite
 
-### Work In Progress
+### Exemplar:
+<img src="https://github.com/GabrielCampos07/justthings/blob/main/readlessashoesgif.gif" width="400" height="450" />
